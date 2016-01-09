@@ -1,0 +1,22 @@
+
+<p>
+  <strong>Alias:</strong>
+  <%= @user.alias %>
+</p>
+
+<p>
+  <strong>UserName</strong>
+  <%= @user.username %>
+</p>
+
+<p>
+  <strong>Roll:</strong>
+   <% Role.all.each do |role| %>
+    <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id) %>
+    <%= role.name %><br />
+  <% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
