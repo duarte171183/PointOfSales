@@ -16,7 +16,7 @@
   <div class="field">
   <%= f.label :role %>
    <% Role.all.each do |role| %>
-    <%= check_box_tag "user[roles][]", roles.id, @user.roles.include?(roles.id) %>
+    <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id) %>
     <%= role.name %>
   <% end %>
   </div>
