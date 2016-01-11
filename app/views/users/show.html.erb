@@ -12,8 +12,8 @@
 <p>
   <strong>Roll:</strong>
    <% Role.all.each do |role| %>
-    <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id) %>
-    <%= role.name %><br />
+    <%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), :disabled => true%>
+    <%= role.name %>
   <% end %>
 </p>
 

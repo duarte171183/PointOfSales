@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  
+  resourcify
   rolify
 
   # Include default devise modules. Others available are:

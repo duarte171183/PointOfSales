@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, :skip => [:registrations]                                          
-  
+  devise_for :users
+  scope "/admin" do
+    resources :users
+  end
   resources :users
   resources :products
   root 'welcome#index'

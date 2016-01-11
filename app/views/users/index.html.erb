@@ -1,6 +1,7 @@
 <h1>Listing Users</h1>
-
-<%= link_to 'New User', new_user_path %>
+<% if current_user.has_role? :admin %>
+  <%= link_to 'New User', new_user_path %>
+<% end %>  
 <table>
   <thead>
     <tr>
@@ -17,8 +18,10 @@
         <td><%= user.alias %></td>
         <td><%= user.username %></td>
         <td><%= user.email%></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <% if current_user.has_role? :admin %>
+          <td><%= link_to 'Show', user %></td>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
