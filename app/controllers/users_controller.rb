@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.where.not(id: current_user )
+    @users = User.where.not(id: current_user)
   end
 
   # GET /Users/1

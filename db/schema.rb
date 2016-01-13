@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220081104) do
+ActiveRecord::Schema.define(version: 20160112024203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20151220081104) do
     t.datetime "updated_at",    null: false
     t.string   "photo"
     t.integer  "stock"
+    t.integer  "bar_code"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -41,6 +42,27 @@ ActiveRecord::Schema.define(version: 20151220081104) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "sales", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "ticket_id"
+    t.decimal  "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "sales", ["product_id"], name: "index_sales_on_product_id", using: :btree
+  add_index "sales", ["ticket_id"], name: "index_sales_on_ticket_id", using: :btree
+
+  create_table "tickets", force: :cascade do |t|
+    t.decimal  "subtotal",   precision: 10, scale: 2
+    t.decimal  "total",      precision: 10, scale: 2
+    t.decimal  "pay_with",   precision: 10, scale: 2
+    t.decimal  "change",     precision: 10, scale: 2
+    t.integer  "status"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "alias",               default: "", null: false
@@ -67,4 +89,6 @@ ActiveRecord::Schema.define(version: 20151220081104) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "sales", "products"
+  add_foreign_key "sales", "tickets"
 end
