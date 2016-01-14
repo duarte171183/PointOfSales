@@ -1,12 +1,14 @@
 @TicketForm = React.createClass
 	
+	
 	getInitialState: ->
-      product_id: ''
-      ticket_id: ''
-      quantity: ''
+      subtotal: ''
+      total: ''
+      pay_with: ''
+      change: ''
     
     valid: ->
-      @state.product_id && @state.quantity
+      @state.subtotal && @state.total && @state.change && @state.pay_with
 
     handleChange: (e) ->
       name = e.target.name
@@ -15,34 +17,53 @@
 
     handleSubmit: (e) ->
       e.preventDefault()
-      $.post '', { sale: @state }, (data) =>
-        @props.handleNewSale data
+      $.post 'tickets',{ ticket: @state }, (data) =>
+        @props.handleNewTicket data
         @setState @getInitialState()
       , 'JSON'
     
     render: ->
-      React.DOM.form
-        onSubmit: @handleSubmit
-        React.DOM.div
-          className: 'form-group'
-          React.DOM.input
-            type: 'number'
-            className: 'form-control'
-            placeholder: 'product_id'
-            name: 'product_id'
-            value: @state.product_id
-            onChange: @handleChange
-        React.DOM.div
-          className: 'form-group'
-          React.DOM.input
-            type: 'number'
-            className: 'form-control'
-            placeholder: 'quantity'
-            name: 'quantity'
-            value: @state.quantity
-            onChange: @handleChange
-        React.DOM.button
-          type: 'submit'
-          className: 'btn btn-primary'
-          disabled: !@valid()
-          'Cobrar'
+	      React.DOM.form
+	        onSubmit: @handleSubmit
+	        className: 'form-inline'
+	        React.DOM.div
+	          className: 'form-group'
+	          React.DOM.input
+	            type: 'number'
+	            className: 'form-control'
+	            placeholder: 'subtotal'
+	            name: 'subtotal'
+	            value: @state.subtotal
+	            onChange: @handleChange
+	        React.DOM.div
+	          className: 'form-group'
+	          React.DOM.input
+	            type: 'number'
+	            className: 'form-control'
+	            placeholder: 'total'
+	            name: 'total'
+	            value: @state.total
+	            onChange: @handleChange
+	        React.DOM.div
+	          className: 'form-group'
+	          React.DOM.input
+	            type: 'number'
+	            className: 'form-control'
+	            placeholder: 'pay_with'
+	            name: 'pay_with'
+	            value: @state.pay_with
+	            onChange: @handleChange
+	        React.DOM.div
+	          className: 'form-group'
+	          React.DOM.input
+	            type: 'number'
+	            className: 'form-control'
+	            placeholder: 'change'
+	            name: 'change'
+	            value: @state.change
+	            onChange: @handleChange
+	        React.DOM.button
+	          type: 'submit'
+	          className: 'btn btn-primary'
+	          disabled: !@valid()
+	          'Cobrar'
