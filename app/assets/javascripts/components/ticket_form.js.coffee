@@ -1,6 +1,6 @@
-@SaleForm = React.createClass
-    
-    getInitialState: ->
+@TicketForm = React.createClass
+	
+	getInitialState: ->
       product_id: ''
       ticket_id: ''
       quantity: ''
@@ -45,7 +45,4 @@
           type: 'submit'
           className: 'btn btn-primary'
           disabled: !@valid()
-          'Add Product'
-        
-
-
+          'Cobrar'

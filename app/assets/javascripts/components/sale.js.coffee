@@ -1,6 +1,8 @@
 @Sale = React.createClass
   render: ->
-    React.DOM.tr null,
-      React.DOM.td null, @props.sale.product_id
-      React.DOM.td null, @props.sale.ticket_id
-      React.DOM.td null, @props.sale.quantity
+    React.DOM.li 
+      className: 'list-group-item'
+      null, @props.sale.product_id,  
+        React.DOM.span
+          className: 'badge'
+          null, @props.sale.quantity,  

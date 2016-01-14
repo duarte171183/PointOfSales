@@ -1,23 +1,31 @@
 @Sales = React.createClass
   getInitialState: ->
     sales: @props.data
+  
   getDefaultProps: ->
     sales: []
+  
+  addSale: (sale) ->
+    sales = @state.sales.slice()
+    sales.push sale
+    @setState sales: sales
+  
   render: ->
     React.DOM.div
-      className: 'sales'
-      React.DOM.h2
-        className: 'quantity'
-        'Sales'
-      React.createElement SaleForm, handleNewRecord: @addRecord
-      React.DOM.hr null
-      React.DOM.table
-        className: 'table table-bordered'
-        React.DOM.thead null,
-          React.DOM.tr null,
-            React.DOM.th null, 'product'
-            React.DOM.th null, 'ticket'
-            React.DOM.th null, 'quantity'
-        React.DOM.tbody null,
-          for sale in @state.sales
+      className: 'row'
+      
+      React.DOM.div
+       className: 'col-md-8'
+       React.DOM.ul
+        className: 'list-group'
+        for sale in @state.sales
             React.createElement Sale, key: sale.id, sale: sale
+
+      React.DOM.div
+       className: 'col-md-4'    
+       React.createElement SaleForm, handleNewSale: @addSale
+       React.createElement TicketForm
+      
+      
+      
+      
