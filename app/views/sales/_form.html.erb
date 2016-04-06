@@ -12,13 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :product_id %><br>
-    <%= f.text_field :product_id %>
-  </div>
-  <div class="field">
     <%= f.label :ticket_id %><br>
-    <%= f.text_field :ticket_id %>
   </div>
+  
+  <div class="field">
+    <%= f.label :product_id%>
+    <%= f.collection_select(:product_id, Product.all, :id, :name, {include_blank: 'Select one'}) %>
+  </div>
+
   <div class="field">
     <%= f.label :quantity %><br>
     <%= f.text_field :quantity %>
@@ -27,3 +28,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+

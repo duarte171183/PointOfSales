@@ -10,6 +10,7 @@ class SalesController < ApplicationController
   # GET /sales/1
   # GET /sales/1.json
   def show
+    @sales = Sale.where(ticket_id: nil)
   end
 
   # GET /sales/new
@@ -25,9 +26,13 @@ class SalesController < ApplicationController
   # POST /sales.json
   def create
     @sale = Sale.new(sale_params)
+
+    if @sale.ticket_id? nil
+      @ticket_new = Ticket.new
+    else
     respond_to do |format|
       if @sale.save
-        format.html { redirect_to @sale, notice: 'Sale was successfully created.' }
+        format.html { redirect_to sales_path(@sale)}
         format.json { render :show, status: :created, location: @sale }
       else
         format.html { render :new }
@@ -39,10 +44,9 @@ class SalesController < ApplicationController
   # PATCH/PUT /sales/1
   # PATCH/PUT /sales/1.json
   def update
-    @sales = Sale.where(ticket_id: nil)
     respond_to do |format|
       if @sale.update(sale_params)
-        format.html { redirect_to @sale, notice: 'Sale was successfully updated.' }
+        format.html { redirect_to sales_path(@sale)}
         format.json { render :show, status: :ok, location: @sale }
       else
         format.html { render :edit }
