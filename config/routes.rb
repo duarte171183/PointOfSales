@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  resources :sales
-  resources :tickets
+
   devise_for :users
   scope "/admin" do
     resources :users
   end
   resources :users
   resources :products
+  resources :tickets
+  resources :sales
+  
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

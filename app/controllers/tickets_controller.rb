@@ -15,6 +15,7 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
+    @ticket.sales.build
   end
 
   # GET /tickets/1/edit
@@ -24,10 +25,10 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
+
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.save
-        @sales = Sale.where(ticket_id: nil).update_all(ticket_id: @ticket.id)
         format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: @ticket }
       else
@@ -69,6 +70,7 @@ class TicketsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
-      params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status)
+      params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
+                                      sales_attributes: [:id, :product_id, :quantity, :_destroy])
     end
 end

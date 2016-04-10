@@ -1,0 +1,7 @@
+<div class="sales-fields">
+    <%= f.label :product_id %><br>
+    <%= f.collection_select(:product_id, Product.all, :id, :name, {include_blank: 'Select one'}) %>
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity %>
+  	<%= link_to_remove_association( "remove Product", f, {wrapper_class: 'sales-fields'} ) %>
+</div>

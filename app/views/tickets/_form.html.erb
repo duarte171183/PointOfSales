@@ -10,7 +10,16 @@
       </ul>
     </div>
   <% end %>
+  
 
+  <%= f.fields_for :sales do |ts|%>
+    <%= render 'sale_fields', :f => ts %>
+  <% end %>
+   <div class='links'>
+      <%= link_to_add_association 'add sale', f, :sales %>
+    </div>
+  </div>
+  
   <div class="field">
     <%= f.label :subtotal %><br>
     <%= f.text_field :subtotal %>
@@ -31,7 +40,8 @@
     <%= f.label :status %><br>
     <%= f.number_field :status %>
   </div>
-  <div class="actions">
+  
+ <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>

@@ -4,18 +4,17 @@ class SalesController < ApplicationController
   # GET /sales
   # GET /sales.json
   def index
-    @sales = Sale.where(ticket_id: nil)
+    @sales = Sales.all
   end
-
+  
   # GET /sales/1
   # GET /sales/1.json
   def show
-    @sales = Sale.where(ticket_id: nil)
   end
 
   # GET /sales/new
   def new
-    @sale = Sale.new
+    @sale = Sales.new
   end
 
   # GET /sales/1/edit
@@ -25,11 +24,7 @@ class SalesController < ApplicationController
   # POST /sales
   # POST /sales.json
   def create
-    @sale = Sale.new(sale_params)
-
-    if @sale.ticket_id? nil
-      @ticket_new = Ticket.new
-    else
+    @sale = Sales.new(sale_params)
     respond_to do |format|
       if @sale.save
         format.html { redirect_to sales_path(@sale)}
