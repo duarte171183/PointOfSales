@@ -22,6 +22,20 @@ class ProductsController < ApplicationController
   def edit
   end
 
+  def find
+    respond_to do |format|
+      if params[:bar_code]
+        @product = Product.find_by bar_code: params[:bar_code]
+      end
+      if @product.nil?
+        @product = Product.new
+        format.html { render :new }
+      else
+        format.html { render :show }
+      end
+      format.json { render json: @product, status: :ok}
+    end
+  end
   # POST /products
   # POST /products.json
   def create
@@ -70,6 +84,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :brand, :price, :purchaseprice, :dateofexpiry, :stock, :minstock, :maxstock, :description, :photo)
+      params.require(:product).permit(:name, :brand, :price, :purchaseprice, :dateofexpiry, :stock, :minstock, :maxstock, :description, :photo, :bar_code)
     end
 end

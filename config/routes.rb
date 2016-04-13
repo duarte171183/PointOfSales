@@ -5,11 +5,19 @@ Rails.application.routes.draw do
     resources :users
   end
   resources :users
-  resources :products
   resources :tickets
   resources :sales
   
   root 'welcome#index'
+
+
+  resources :products do
+    collection do
+      post :find
+      get :find
+    end
+  end
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
