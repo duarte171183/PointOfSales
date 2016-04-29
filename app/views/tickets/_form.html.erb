@@ -13,52 +13,60 @@
   
   <div class="row">
   	<div id="SaleContainer">
-  	 <div class="col-md-4">
-	  	 <div id="addProductoContainer">
-	    	<input type="text" name="codebarproduct" id="codebarproduct" placeholder="Insert Barcode"/>
-	    	<input type="number" name="quantityproduct" id="quantityproduct" placeholder="Quantity">
-		</div>
-	</div>
-  <div class="col-md-8">
-  Name:<span class="label label-default" id="productname"></span>
-  Price: <span class="label label-default" id="productprice"></span>
-  Quantity: <span class="label label-default" id="productquantity"></span>
-  Total: <span class="label label-default" id="producttotal"></span>
-
-  <!--	 <table class="table" >
-  	 <thead>
-	  <tr>
-	    <th>Barcode</th>
-	    <th>Product</th>
-	    <th>Price</th>
-	    <th>Quantity</th>
-	  </tr>
-	  </thead>
-	  <tr>
-	    <td>Eve</td>
-	    <td>Jackson</td>
-	    <td>94</td>
-	    <td>94</td>
-	  </tr>
-	</table> 
+  	 <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+          	 <div id="addProductoContainer">
+      	    	<input type="text" name="codebarproduct" id="codebarproduct" placeholder="Insert Barcode"/>
+      	    	<input type="number" name="quantityproduct" id="quantityproduct" placeholder="Quantity">
+      	     </div>
+            </div>
+        </div>
+	   </div>
+     <div class="col-md-6">
+       <div class="panel panel-default">
+        <div class="panel-body">
+          Name:<span class="label label-default" id="productname"></span>
+          Price: <span class="label label-default" id="productprice"></span>
+          Quantity: <span class="label label-default" id="productquantity"></span>
+          Total: <span class="label label-default" id="producttotal"></span>
+        </div>
+       </div>
+     </div>
+    </div>
   </div>
-</div>-->
-</div>
-<div class="row">
-<div class="col-md-12">
-    <%= f.label :subtotal %>
-    <%= f.text_field :subtotal %>
-    <%= f.label :total %>
-    <%= f.text_field :total %>
-    <%= f.label :pay_with %>
-    <%= f.text_field :pay_with %>
-    <%= f.label :change %>
-    <%= f.text_field :change %>
+  <br>
+  <div class="row">
+    <!--<div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <% link_to_add_association 'add product', f, :sales, :class => 'btn btn-large btn-primary' %>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-12">   
+     <%= f.fields_for :sales do |ts|%>
+        <%= render 'sale_fields', :f => ts %>
+      <% end %>
+    </div>
   </div>
-  
+   
+   <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="col-md-12">
+          <%= f.label :subtotal %>
+          <%= f.text_field :subtotal %>
+          <%= f.label :total %>
+          <%= f.text_field :total %>
+          <%= f.label :pay_with %>
+          <%= f.text_field :pay_with %>
+          <%= f.label :change %>
+          <%= f.text_field :change %>
+      </div>
+    </div>
+  </div>  
  <div class="actions">
     <%= f.submit %>
-  </div>
 </div>
 <% end %>
 
