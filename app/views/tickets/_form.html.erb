@@ -36,21 +36,14 @@
     </div>
   </div>
   <br>
-  <div class="row">
-    <!--<div class="col-md-2">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <% link_to_add_association 'add product', f, :sales, :class => 'btn btn-large btn-primary' %>
-        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="line_items" class="panel panel-default">
+                <%= link_to_add_association 'add product', f, :sales, :class => 'btn btn-large btn-primary',  render_options: { wrapper: 'inline' } %>
+         </div>
       </div>
-    </div> -->
-    <div class="col-md-12">   
-     <%= f.fields_for :sales do |ts|%>
-        <%= render 'sale_fields', :f => ts %>
-      <% end %>
     </div>
-  </div>
-   
+   <br>   
    <div class="panel panel-default">
     <div class="panel-body">
       <div class="col-md-12">

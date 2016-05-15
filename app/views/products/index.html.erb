@@ -12,7 +12,9 @@
            <%=image_tag product.photo.to_s%>
         <%end%>
        <div class="caption">
-           <h3><%= product.name %></h3>
+           <h4><%= product.name %></h4>
+           <p>Barcode:</p> 
+           <h4><%= product.bar_code %>
            <p>Price:</p> 
            <h4><%= product.price %>
            <p>Stock:</p>
