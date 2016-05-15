@@ -25,31 +25,9 @@ $(document).ready(function() {
  	var quantity = 0;
  	var   subtotal_ticket = 0;
  	
- 	$('#line_items')
- 	  .on('cocoon:before-insert', function(e, sale_to_be_added) {
-        searchdata2($('#codebarproduct').val(), 
-          function(data) {
-            sale_to_be_added.find("select").val(data.id)
-            sale_to_be_added.find("input[type='number']").val($('#quantityproduct').val())
-            sale_to_be_added.find("input[type='text']").val($('#producttotal').text())
-          });
-        subtotal_ticket=subtotal_ticket+total;
-        $('#ticket_subtotal').val(subtotal_ticket);
-      })
-      .on('cocoon:after-insert', function(e, added_sale) {
+ 
       
-      })
-      .on("cocoon:before-remove", function(e, sale) {
-        $(this).data('remove-timeout', 1000);
-        sale.fadeOut('slow');
-      })
-      .on("cocoon:after-remove", function(e, sale) {
-       
-        r = sale.find("input[type='text']").val();
-        subtotal_ticket = $('#ticket_subtotal').val()-r; 
-       //* e.g. recalculate order of child items */
-      });
-    $('#codebarproduct' ).keyup(function() {
+  $('#codebarproduct' ).keyup(function() {
     	var value = $( this ).val();
     		searchdata(value);	
    	}).keyup();
