@@ -34,21 +34,22 @@ $(document).ready(function() {
             sale_to_be_added.find("input[type='text']").val($('#producttotal').text())
           });
         subtotal_ticket=subtotal_ticket+total;
-        $('#total_item').val(total);
         $('#ticket_subtotal').val(subtotal_ticket);
-        sale_to_be_added.fadeIn('slow');
       })
       .on('cocoon:after-insert', function(e, added_sale) {
-      	
+      
       })
       .on("cocoon:before-remove", function(e, sale) {
-         $(this).data('remove-timeout', 1000);
+        $(this).data('remove-timeout', 1000);
         sale.fadeOut('slow');
       })
-      .on("cocoon:after-remove", function() {
-        alert("aqui van las restas");
-    	});
-
+      .on("cocoon:after-remove", function(e, sale) {
+       
+        r = sale.find("input[type='text']").val();
+        subtotal_ticket = $('#ticket_subtotal').val()-r; 
+        alert($('#ticket_subtotal').val(subtotal_ticket));
+        /* e.g. recalculate order of child items */
+      });
     $('#codebarproduct' ).keyup(function() {
     	var value = $( this ).val();
     		searchdata(value);	

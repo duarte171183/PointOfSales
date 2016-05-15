@@ -1,6 +1,6 @@
  <div class="sales-fields">
   <div class="panel panel-default">
-  	<div class="panel-body">
+  	<div  class="panel-body">
   	
 	    <%= f.label :product_id %>
 	    <%= f.collection_select(:product_id, Product.all, :id, :name, {}, { disabled: "true" })%>	  
