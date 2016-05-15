@@ -47,8 +47,7 @@ $(document).ready(function() {
        
         r = sale.find("input[type='text']").val();
         subtotal_ticket = $('#ticket_subtotal').val()-r; 
-        alert($('#ticket_subtotal').val(subtotal_ticket));
-        /* e.g. recalculate order of child items */
+       //* e.g. recalculate order of child items */
       });
     $('#codebarproduct' ).keyup(function() {
     	var value = $( this ).val();
