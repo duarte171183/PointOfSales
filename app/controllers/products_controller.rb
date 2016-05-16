@@ -29,11 +29,11 @@ class ProductsController < ApplicationController
       end
       if @product.nil?
         @product = Product.new
-        format.html { render :new }
+        format.html { render :new, notice:  'new' }
       else
-        format.html { render :show }
+        format.html { render :show, notice:  'else' }
       end
-      format.json { render json: @product, status: :ok}
+      format.json { render json: @product,  notice:  'ok'}
     end
   end
   # POST /products
