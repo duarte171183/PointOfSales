@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 //= require turbolinks
 //= require jquery.turbolinks
 //= require components
@@ -21,10 +23,15 @@
 
 
 $(document).ready(function() { 
+
+  $("#new_ticket").validate();  
  	
- 	var quantity = 0;
+ 	var quantity =  $('#quantityproduct' ).val();
+  $('#productquantity').html(quantity);
  	var subtotal_ticket = 0;
- 	
+  var t = 0;
+  var price = 0;
+
  	$('#line_items')
  	  .on('cocoon:before-insert', function(e, sale_to_be_added) {
         searchdata2($('#codebarproduct').val(), 
@@ -54,17 +61,14 @@ $(document).ready(function() {
   $('#codebarproduct' ).on( "change paste keyup", function() {
     	var value = $( this ).val();
    		searchdata(value);	
-      t=$('#quantityproduct' ).val();
-      price= $('#productprice').text();  
-      importforproduct(t, price)
+     
    	});
 
  	$('#quantityproduct' ).on( "change paste keyup", function() {
     	quantity = $( this ).val();
     	$('#productquantity').html(quantity);
     	$('.quantityProdcutsale').val(quantity);
-    	price= $('#productprice').text();  
-    	importforproduct(quantity, price)
+    	importforproduct();
    	});
 
 	function searchdata(id) {
@@ -81,6 +85,7 @@ $(document).ready(function() {
              $('#productname').html(data.name);
              $('#productprice').html(data.price);
              $('.idProductsale').val(data.id); 
+              importforproduct(t, price)
             }
 	     }
    	});
@@ -100,8 +105,10 @@ $(document).ready(function() {
   	  alert(index);
 	}
 
-	function importforproduct(quantity, price){
-	    total= quantity*price;
+	function importforproduct(){
+	  t=$('#quantityproduct' ).val();
+    price= $('#productprice').text();  
+    total= t*price;
 		$('#producttotal').html(total);
 
 	}

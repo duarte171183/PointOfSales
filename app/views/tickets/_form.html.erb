@@ -17,8 +17,8 @@
         <div class="panel panel-default">
             <div class="panel-body">
           	 <div id="addProductoContainer">
-      	    	<input type="text" name="codebarproduct" id="codebarproduct" placeholder="Insert Barcode"/>
-      	    	<input type="number" name="quantityproduct" id="quantityproduct" placeholder="Quantity" value="1">
+      	    	<input type="text" name="codebarproduct" id="codebarproduct" placeholder="Insert Barcode" data-validation="required"/>
+      	    	<input type="number" name="quantityproduct" id="quantityproduct" placeholder="Quantity" value="1", min="1">
       	     </div>
             </div>
         </div>
@@ -48,13 +48,13 @@
     <div class="panel-body">
       <div class="col-md-12">
           <%= f.label :subtotal %>
-          <%= f.text_field :subtotal %>
+          <%= f.number_field :subtotal  %>
           <%= f.label :total %>
-          <%= f.text_field :total %>
+          <%= f.number_field :total %>
           <%= f.label :pay_with %>
-          <%= f.text_field :pay_with %>
+          <%= f.number_field :pay_with %>
           <%= f.label :change %>
-          <%= f.text_field :change %>
+          <%= f.number_field :change %>
       </div>
     </div>
   </div>  
