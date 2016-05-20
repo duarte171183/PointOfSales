@@ -1,8 +1,7 @@
 <%= form_for(@ticket) do |f| %>
   <% if @ticket.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-
       <ul>
       <% @ticket.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -10,15 +9,17 @@
       </ul>
     </div>
   <% end %>
-  
+   
+
   <div class="row">
-  	<div id="SaleContainer">
-  	 <div class="col-md-6">
+    	 <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body">
-          	 <div id="addProductoContainer">
-      	    	<input type="text" name="codebarproduct" id="codebarproduct" placeholder="Insert Barcode" data-validation="required"/>
-      	    	<input type="number" name="quantityproduct" id="quantityproduct" placeholder="Quantity" value="1", min="1">
+          	 <div class="form-group ">
+      	    	<input type="text" name="codebarproduct" class="form-control" id="codebarproduct" placeholder="Insert Barcode" data-validation="required">
+      	     </div>
+             <div class="form-group">
+              <input type="number" name="quantityproduct"  class="form-control" id="quantityproduct" placeholder="Quantity" value="1", min="1" data-validation="required" >
       	     </div>
             </div>
         </div>
@@ -34,7 +35,6 @@
        </div>
      </div>
     </div>
-  </div>
   <br>
     <div id="line_items"  class="row">
       <div class="col-md-12">
@@ -48,13 +48,13 @@
     <div class="panel-body">
       <div class="col-md-12">
           <%= f.label :subtotal %>
-          <%= f.number_field :subtotal  %>
+          <%= f.number_field :subtotal, min:1,  step: 2, :required => true  %>
           <%= f.label :total %>
-          <%= f.number_field :total %>
+          <%= f.number_field :total, min:1,   step: 2, :required => true %>
           <%= f.label :pay_with %>
-          <%= f.number_field :pay_with %>
+          <%= f.number_field :pay_with, min:1,  step: 2, :required => true%>
           <%= f.label :change %>
-          <%= f.number_field :change %>
+          <%= f.number_field :change, min:0,  step: 2, :required => true %>
       </div>
     </div>
   </div>  

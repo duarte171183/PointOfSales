@@ -1,4 +1,24 @@
-<p id="notice"><%= notice %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ticket.sales.each do |sale| %>
+      <tr>
+        <td><%= sale.product.name %></td>
+        <td><%= sale.quantity %></td>
+        <td><%= sale.totalsale %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <p>
   <strong>Subtotal:</strong>
@@ -20,10 +40,6 @@
   <%= @ticket.change %>
 </p>
 
-<p>
-  <strong>Status:</strong>
-  <%= @ticket.status %>
-</p>
 
 <%= link_to 'Edit', edit_ticket_path(@ticket) %> |
 <%= link_to 'Back', tickets_path %>

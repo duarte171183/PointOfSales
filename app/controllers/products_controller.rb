@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all.order(:name)
+    @products = Product.all.order(:bar_code)
   end
 
   # GET /products/1
@@ -26,12 +26,6 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if params[:bar_code]
         @product = Product.find_by bar_code: params[:bar_code]
-      end
-      if @product.nil?
-        @product = Product.new
-        format.html { render :new, notice:  'new' }
-      else
-        format.html { render :show, notice:  'else' }
       end
       format.json { render json: @product,  notice:  'ok'}
     end

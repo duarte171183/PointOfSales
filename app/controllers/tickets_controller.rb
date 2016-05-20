@@ -71,6 +71,6 @@ class TicketsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
       params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
-                                      sales_attributes: [:id, :product_id, :quantity, :_destroy])
+                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale, :_destroy])
     end
 end

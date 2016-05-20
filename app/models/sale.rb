@@ -2,6 +2,6 @@ class Sale < ActiveRecord::Base
   belongs_to :product
   belongs_to :ticket 
 
-  validates :quantity, :product_id, :presence => true
+  validates_presence_of :quantity, :product_id, :totalsale, :presence => true
   
 end

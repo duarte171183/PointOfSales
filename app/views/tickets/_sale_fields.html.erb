@@ -3,11 +3,11 @@
   	<div  class="panel-body">
   	
 	    <%= f.label :product_id %>
-	    <%= f.collection_select(:product_id, Product.all, :id, :name, {}, { disabled: "true" })%>	  
-	    <%= f.label :quantity %>
-	    <%= f.number_field :quantity, :disabled=>true %>
+	    <%= f.collection_select(:product_id, Product.all, :id, :name, {})%>	  
+	    <%= f.label :quantity  %>
+	    <%= f.number_field :quantity %>
 	    <%= f.label :totalsale %>
-	    <%= f.text_field :totalsale, :disabled=>true %>
+	    <%= f.text_field :totalsale, min:1 %>
 	  	<%= link_to_remove_association( "remove Product", f, {wrapper_class: 'sales-fields', :class => 'btn btn-large btn-danger'} ) %>
 	</div>
   </div>

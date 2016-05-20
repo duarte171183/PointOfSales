@@ -24,6 +24,8 @@
 
 $(document).ready(function() { 
 
+
+
   $("#new_ticket").validate();  
  	
  	var quantity =  $('#quantityproduct' ).val();
@@ -42,6 +44,7 @@ $(document).ready(function() {
           });
         subtotal_ticket=subtotal_ticket+total;
         $('#ticket_subtotal').val(subtotal_ticket);
+        $('#ticket_total').val(subtotal_ticket);
       })
       .on('cocoon:after-insert', function(e, added_sale) {
       
@@ -55,6 +58,7 @@ $(document).ready(function() {
         rest = sale.find("input[type='text']").val();
         subtotal_ticket = $('#ticket_subtotal').val()-rest; 
         $('#ticket_subtotal').val(subtotal_ticket);
+         $('#ticket_total').val(subtotal_ticket);
        //* e.g. recalculate order of child items */
       });
       
@@ -64,14 +68,21 @@ $(document).ready(function() {
      
    	});
 
- 	$('#quantityproduct' ).on( "change paste keyup", function() {
+	$('#quantityproduct' ).on( "change paste keyup", function() {
     	quantity = $( this ).val();
     	$('#productquantity').html(quantity);
     	$('.quantityProdcutsale').val(quantity);
     	importforproduct();
    	});
 
-	function searchdata(id) {
+   $('#ticket_pay_with' ).on( "change paste keyup", function() {
+      pay_with = $( this ).val();
+      change =  pay_with - $('#ticket_total').val();
+      $('#ticket_change') .val(change);    
+    });
+
+	
+  function searchdata(id) {
 	  	var data;
 	  	$.ajax({
 	    	type: "GET",
