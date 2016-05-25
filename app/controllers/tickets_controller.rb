@@ -20,6 +20,11 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1/edit
   def edit
+    unless current_user.has_role? :admin
+      unless @user == current_user
+        redirect_to  root_path, :notice => "Access denied."
+      end
+    end
   end
 
   # POST /tickets
@@ -55,6 +60,11 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1
   # DELETE /tickets/1.json
   def destroy
+    unless current_user.has_role? :admin
+      unless @user == current_user
+        redirect_to  root_path, :notice => "Access denied."
+      end
+    end
     @ticket.destroy
     respond_to do |format|
       format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }

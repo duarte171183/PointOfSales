@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">POST</a>
+      <a class="navbar-brand" href="#">POST-WEB</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,7 +17,7 @@
       <% if user_signed_in? %>
         <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Products", products_path %></li>
-          <li><%= link_to 'New sale', new_ticket_path(@ticket) %></li>
+          <li><%= link_to 'New Ticket', new_ticket_path(@ticket) %></li>
         <% if current_user.has_role? :admin %>
           <li><%= link_to "User", users_path %></li>
         <% end %>

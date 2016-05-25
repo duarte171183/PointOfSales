@@ -33,14 +33,17 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'bootstrap-sass', '~> 3.2.0'
+gem 'jquery-turbolinks'
+gem 'jquery-validation-rails'
 gem 'autoprefixer-rails'
 gem 'carrierwave'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
 gem 'cocoon'
-gem 'jquery-turbolinks'
-gem 'jquery-validation-rails'
+
+#use for multi-tenancy
+gem 'apartment'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

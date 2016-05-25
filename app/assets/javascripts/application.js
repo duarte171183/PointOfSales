@@ -96,7 +96,7 @@ $(document).ready(function() {
              $('#productname').html(data.name);
              $('#productprice').html(data.price);
              $('.idProductsale').val(data.id); 
-              importforproduct(t, price)
+             importforproduct(t, price)
             }
 	     }
    	});

@@ -12,46 +12,48 @@
 
   <div class="field">
     <%= f.label :bar_code %><br>
-    <%= f.text_field :bar_code %>
+    <%= f.text_field :bar_code, class: 'form-control'%>
   </div>
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control'%>
   </div>
   <div class="field">
     <%= f.label :brand %><br>
-    <%= f.text_field :brand %>
+    <%= f.text_field :brand, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :price %><br>
-    <%= f.text_field :price %>
+    <%= f.text_field :price,  class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :purchaseprice %><br>
-    <%= f.text_field :purchaseprice %>
+    <%= f.text_field :purchaseprice, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :dateofexpiry %><br>
-    <%= f.date_select :dateofexpiry %>
+    <%= f.date_select :dateofexpiry, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :stock %><br>
-    <%= f.number_field :stock %>
+    <%= f.number_field :stock, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :minstock %><br>
-    <%= f.number_field :minstock %>
+    <%= f.number_field :minstock, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :maxstock %><br>
-    <%= f.number_field :maxstock %>
+    <%= f.number_field :maxstock, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, class: 'form-control' %>
   </div>
   <div class="field">
+   <span class="btn btn-default btn-file">
     <%= f.file_field :photo %>
+   </span>
   </div>
   <div class="actions">
     <%= f.submit %>

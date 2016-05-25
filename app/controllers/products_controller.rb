@@ -37,9 +37,11 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to products_url, notice: 'Product was successfully created.' }
+        flash[:success] = 'Todo was successfully created.'
+        format.html { redirect_to products_url}
         format.json { render :show, status: :created, location:products_url}
       else
+         flash[:danger] = 'There was a problem creating the product.'
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
