@@ -38,14 +38,3 @@ div {
   }
 }
 
-
-#notice 
-  color: green
-
-.errors
-  color: red
-
-.field_with_errors 
-  @extend .has-error
-
-
