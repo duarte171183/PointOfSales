@@ -41,6 +41,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'rolify'
 gem 'cocoon'
+gem 'rails_12factor', group: :production
 
 #use for multi-tenancy
 gem 'apartment'
