@@ -1,4 +1,6 @@
+
 class TicketsController < ApplicationController
+
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
   # GET /tickets
@@ -10,6 +12,15 @@ class TicketsController < ApplicationController
   # GET /tickets/1
   # GET /tickets/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do 
+        pdf = TicketPdf.new(@ticket, view_context)
+        send_data pdf.render, filename: "ticket_#{@ticket.id}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
   end
 
   # GET /tickets/new

@@ -42,7 +42,9 @@ gem 'cancancan'
 gem 'rolify'
 gem 'cocoon'
 gem 'rails_12factor', group: :production
-
+#use pdf report
+gem 'prawn', '~> 2.1'
+gem 'prawn-table', '~> 0.2.2'
 #use for multi-tenancy
 gem 'apartment'
 
