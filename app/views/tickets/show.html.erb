@@ -13,33 +13,35 @@
       <tr>
         <td><%= sale.product.name %></td>
         <td><%= sale.quantity %></td>
-        <td><%= sale.totalsale %></td>
+        <td><%= number_to_currency( sale.totalsale ) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+<br>
 
 <p>
   <strong>Subtotal:</strong>
-  <%= @ticket.subtotal %>
+  <%=number_to_currency(@ticket.subtotal) %>
 </p>
 
 <p>
   <strong>Total:</strong>
-  <%= @ticket.total %>
+  <%=number_to_currency( @ticket.total) %>
 </p>
 
 <p>
   <strong>Pay with:</strong>
-  <%= @ticket.pay_with %>
+  <%=number_to_currency( @ticket.pay_with ) %>
 </p>
 
 <p>
   <strong>Change:</strong>
-  <%= @ticket.change %>
+  <%= number_to_currency( @ticket.change ) %>
 </p>
-
+<p>
+  <%= link_to 'Print ticket (pdf)', ticket_path(@ticket, format: "pdf"), :target=> '_blank'%>
+</p>
 
 <%= link_to 'Edit', edit_ticket_path(@ticket) %> |
 <%= link_to 'Back', tickets_path %>

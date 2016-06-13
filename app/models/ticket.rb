@@ -10,7 +10,7 @@ class Ticket < ActiveRecord::Base
 	
 
 	protected
-	def validates
-		errors.add(:change, "should be positive") unless :change.nill? || :change >= 0.0
+	def quid(price)
+		number_to_currency(price, :unit => "$")
 	end
 end
