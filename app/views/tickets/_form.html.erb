@@ -27,11 +27,14 @@
      <div class="col-md-6">
        <div class="panel panel-default">
         <div class="panel-body">
+          <img id="productimage" src="http://placehold.it/304x236?text=No+Product">
+          Stock: <span class="label label-default" id="productstock"></span>
+          <br>
+          <br>
           Name:<span class="label label-default" id="productname"></span>
           Price: <span class="label label-default" id="productprice"></span>
           Quantity: <span class="label label-default" id="productquantity"></span>
           Total: <span class="label label-default" id="producttotal"></span>
-          Image: <span></span>
         </div>
        </div>
      </div>
@@ -40,7 +43,7 @@
     <div id="line_items"  class="row">
       <div class="col-md-12">
         <div class="panel panel-default">
-                <%= link_to_add_association 'add product', f, :sales, :class => 'btn btn-large btn-primary',  render_options: { wrapper: 'inline' } %>
+                <%= link_to_add_association 'add product', f, :sales, :id=>'salebtn', :class => 'btn btn-large btn-primary',  render_options: { wrapper: 'inline'} %>
          </div>
       </div>
     </div>

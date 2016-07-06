@@ -25,8 +25,8 @@
 $(document).ready(function() { 
 
 
-
-  $("#new_ticket").validate();  
+  $('#salebtn').prop( "disabled", true );
+  $('#new_ticket').validate();  
  	
  	var quantity =  $('#quantityproduct' ).val();
   $('#productquantity').html(quantity);
@@ -89,17 +89,26 @@ $(document).ready(function() {
 	    	url: '/products/find.json?bar_code=' + id,
 	    	dataType: "JSON",
 	    	success: function(data) {
-            if(data.id==null){
-               alert("Barcode no exist");
+            if(data==null)
+            {
+              alert("barcode not exist");
+              $('#salebtn').prop( "disabled", true );
+            }
+            if(data.stock==0){
+               alert("Stock is zero");
+              $('#salebtn').prop( "disabled", true );
             }
             else{
+             $('#salebtn').prop( "disabled", false );
              $('#productname').html(data.name);
              $('#productprice').html(data.price);
+             $('#productstock').html(data.stock);
+             $('#productimage').attr("src", data.photo.url); 
              $('.idProductsale').val(data.id); 
              importforproduct(t, price)
-            }
+            }  
 	     }
-   	});
+     });
 	}
 
 	function searchdata2(id, callback) {

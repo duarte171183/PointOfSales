@@ -4,4 +4,5 @@ class Sale < ActiveRecord::Base
 
   validates_presence_of :quantity, :product_id, :totalsale, :presence => true
   
+
 end
