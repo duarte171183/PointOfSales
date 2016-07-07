@@ -12,7 +12,6 @@ class Ticket < ActiveRecord::Base
       self.products.each do |p|
       	  self.sales.each do |q|
 	      	e=q.quantity
-	      	puts "La cantidad es"+e.to_s
 	      	p.stock -= e 
 	      	p.save
 	       end

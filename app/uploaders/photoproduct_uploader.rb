@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class PhotoproductUploader < CarrierWave::Uploader::Base
-
+  permissions 0777
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -15,9 +15,12 @@ class PhotoproductUploader < CarrierWave::Uploader::Base
   def store_dir
    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
-  #def default_url
-   #   asset_path [version_name, "default_user_avatar_huge.png"].compact.join('_'))
-  #end
+
+
+  def default_url
+    "/uploads/product/photo/default/"+ ["defaultPhoto.png"].compact.join('_')
+  end
+
   version :thumb do
   process :scale => [50, 50]
 end
@@ -25,9 +28,10 @@ end
 def scale(width, height)
   # do something
 end
-  def extension_white_list
-      %w(jpg jpeg gif png)
-  end
+
+def extension_white_list
+     %w(jpg jpeg gif png)
+end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url

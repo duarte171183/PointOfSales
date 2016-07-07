@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all.order(:bar_code)
+    @products = Product.all.order(:name)
   end
 
   # GET /products/1

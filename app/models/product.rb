@@ -5,7 +5,12 @@ class Product < ActiveRecord::Base
 
 	validates :name, :brand, :price, :purchaseprice, 
 			  :dateofexpiry, :stock, :minstock, :maxstock, :description, 
-			  :photo, :bar_code,  :presence => true
+			  :bar_code,  :presence => true
 	validates_uniqueness_of :bar_code
 	
+	before_save :titleize_name
+
+	def titleize_name
+	 	self.name = name.titleize
+	 end 
 end
