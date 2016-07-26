@@ -11,8 +11,11 @@ class Ticket < ActiveRecord::Base
       self.save
       self.products.each do |p|
       	  self.sales.each do |q|
-	      	e=q.quantity
-	      	p.stock -= e 
+      	  	if q.quantity > p.stock
+	       		errors.add( :ticket, "quantity > stock") 
+	       		raise ActiveRecord::Rollback 
+	       	end
+	       	p.stock -= q.quantity 
 	      	p.save
 	       end
       	end

@@ -48,7 +48,7 @@ class TicketsController < ApplicationController
         format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: @ticket }
       else
-        format.html { render :new }
+        format.html { render :new  }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end

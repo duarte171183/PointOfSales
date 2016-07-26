@@ -91,11 +91,9 @@ $(document).ready(function() {
 	    	success: function(data) {
             if(data==null)
             {
-              alert("barcode not exist");
               $('#salebtn').prop( "disabled", true );
             }
             if(data.stock==0){
-               alert("Stock is zero");
               $('#salebtn').prop( "disabled", true );
             }
             else{
