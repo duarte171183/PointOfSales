@@ -11,6 +11,9 @@
 doc/
 *.swp
 *~
+*.jpeg
+*.jpg
+*.png
 .project
 .DS_Store
 /log/*
