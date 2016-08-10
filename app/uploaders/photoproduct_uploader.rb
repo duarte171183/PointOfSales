@@ -1,9 +1,10 @@
 # encoding: utf-8
 
 class PhotoproductUploader < CarrierWave::Uploader::Base
+
   permissions 0777
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -22,7 +23,7 @@ class PhotoproductUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb do
-  process :scale => [50, 50]
+  process :resize_to_limit =>[260, 201]
 end
   
 def scale(width, height)

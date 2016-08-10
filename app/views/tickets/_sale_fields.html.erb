@@ -1,14 +1,10 @@
-
- <div class="sales-fields">
+<div class="sales-fields">
   <div class="panel panel-default">
   	<div  class="panel-body">
-  	
-	    <%= f.label :product_id %>
-	    <%= f.collection_select(:product_id, Product.all, :id, :name, {})%>	  
-	    <%= f.label :quantity  %>
-	    <%= f.number_field :quantity %>
-	    <%= f.label :totalsale %>
-	    <%= f.text_field :totalsale, min:1 %>
+  	   <%= f.number_field :quantity,  readonly: true, :class => 'form-control' 'input-lg' %>
+       <%= f.collection_select(:product_id, Product.all, :id, :name, {}, {:class => 'form-control' 'input-lg', readonly: true})%>	  
+
+	    <%= f.text_field :totalsale, min:1,  readonly: true, :class => 'form-control' 'input-lg'  %>
 	  	<%= link_to_remove_association( "remove Product", f, {wrapper_class: 'sales-fields', :class => 'btn btn-large btn-danger'} ) %>
 	</div>
   </div>

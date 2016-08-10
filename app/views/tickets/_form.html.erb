@@ -57,18 +57,18 @@
     <div class="panel-body">
       <div class="col-md-12">
           <%= f.label :subtotal %>
-          <%= f.number_field :subtotal, min:1,  step: 2, :required => true, class: 'form-control'  %>
+          <%= f.number_field :subtotal, min:1,  step: 2, :required => true, class: 'form-control', readonly: true  %>
           <%= f.label :total %>
-          <%= f.number_field :total, min:1,   step: 2, :required => true, class: 'form-control' %>
+          <%= f.number_field :total, min:1,   step: 2, :required => true, class: 'form-control', readonly: true %>
           <%= f.label :pay_with %>
           <%= f.number_field :pay_with, min:1,  step: 2, :required => true, class: 'form-control' %>
           <%= f.label :change %>
-          <%= f.number_field :change, min:0,  step: 2, :required => true, class: 'form-control' %>
+          <%= f.number_field :change, min:0,  step: 2, :required => true, class: 'form-control', readonly: true %>
       </div>
     </div>
   </div>  
  <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-large btn-success' %>
 </div>
 <% end %>
 
