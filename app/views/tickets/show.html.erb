@@ -28,6 +28,8 @@
 <p>
   <strong>Total:</strong>
   <%=number_to_currency( @ticket.total) %>
+  <br>
+  <strong><%=number_to_currency_in_words( @ticket.total ) %></strong>
 </p>
 
 <p>
@@ -38,6 +40,8 @@
 <p>
   <strong>Change:</strong>
   <%= number_to_currency( @ticket.change ) %>
+  <br>
+  <strong><%= number_to_currency_in_words( @ticket.change ) %></strong>
 </p>
 <p>
   <%= link_to 'Print ticket (pdf)', ticket_path(@ticket, format: "pdf"), :target=> '_blank'%>

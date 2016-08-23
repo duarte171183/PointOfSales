@@ -1,11 +1,18 @@
 class TicketPdf < Prawn::Document
 	def initialize(ticket, view)
-		super(top_margin: 70, :page_size => 'A3')
+		super(top_margin: 70, :page_size => 'B10')
 		@ticket = ticket
 		@view = view
 		ticket_number
+		date_shopping
 		line_items
 		total_price
+		leyend
+	end
+
+	def date_shopping
+		move_down 10
+		text "#{@ticket.created_at}"
 	end
 
 	def ticket_number
@@ -33,5 +40,15 @@ class TicketPdf < Prawn::Document
 		text "Total: #{price(@ticket.total)}", size: 10, style: :bold
 		text "Pay With: #{price(@ticket.pay_with)}", size: 10, style: :bold
 		text "Change: #{price(@ticket.change)}", size: 10, style: :bold
+		text "#{change_words}"
+	end
+
+	def leyend
+		move_down 15
+		text "thanks for your purchase"
+	end
+
+	def change_words
+		number_to_currency_in_words( @ticket.change )
 	end
 end
