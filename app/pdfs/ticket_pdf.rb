@@ -1,6 +1,6 @@
 class TicketPdf < Prawn::Document
 	def initialize(ticket, view)
-		super(top_margin: 70, :page_size => [72, 297])
+		super(top_margin: 70, :page_size => '2A0')
 		@ticket = ticket
 		@view = view
 		ticket_number
@@ -40,7 +40,7 @@ class TicketPdf < Prawn::Document
 		text "Total: #{price(@ticket.total)}", size: 10, style: :bold
 		text "Pay With: #{price(@ticket.pay_with)}", size: 10, style: :bold
 		text "Change: #{price(@ticket.change)}", size: 10, style: :bold
-		text "#{change_words}"
+		
 	end
 
 	def leyend
