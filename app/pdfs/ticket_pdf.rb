@@ -1,6 +1,6 @@
 class TicketPdf < Prawn::Document
 	def initialize(ticket, view)
-		super(top_margin: 70, :page_size => 'A4')
+		super(top_margin: 70, :page_size => 'A6')
 		@ticket = ticket
 		@view = view
 		ticket_number
