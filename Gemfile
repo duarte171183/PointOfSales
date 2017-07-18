@@ -31,18 +31,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'angular-rails-templates'
+gem 'sprockets', '~> 3.0'
+gem 'bower-rails'
 gem 'jquery-turbolinks'
-gem 'jquery-validation-rails'
-gem 'autoprefixer-rails'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
-gem 'cocoon'
 gem 'rails_12factor', group: :production
 #use pdf report
 gem 'prawn', '~> 2.1'
@@ -50,6 +48,7 @@ gem 'prawn-table', '~> 0.2.2'
 #use for multi-tenancy
 gem 'apartment'
 gem 'currency-in-words'
+gem 'ng-rails-csrf'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

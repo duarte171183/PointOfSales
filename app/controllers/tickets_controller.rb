@@ -2,11 +2,13 @@
 class TicketsController < ApplicationController
 
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :json
 
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    @ticket = Ticket.new
+    @ticket.sales.build
   end
 
   # GET /tickets/1
@@ -92,6 +94,6 @@ class TicketsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
       params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
-                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale, :_destroy])
+                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale, :user_id, :_destroy])
     end
 end

@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
 	mount_uploader :photo, PhotoproductUploader
 
 	validates :name, :brand, :price, :purchaseprice, 
-			  :dateofexpiry, :stock, :minstock, :maxstock, :description, 
+			  :dateofexpiry, :stock, :minstock, :maxstock,
 			  :bar_code,  :presence => true
 	validates_uniqueness_of :bar_code
 	

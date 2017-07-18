@@ -7,9 +7,12 @@ Rails.application.routes.draw do
   end
   resources :users
   resources :tickets
-  resources :sales
+  resources :sales do
+    collection { post :create_sales , via: :options  }
+  end
   
   root 'welcome#index'
+  
 
 
   resources :products do
@@ -18,7 +21,8 @@ Rails.application.routes.draw do
       get :find
     end
   end
-  
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -75,3 +79,4 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 end
+

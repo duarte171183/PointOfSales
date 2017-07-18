@@ -1,0 +1,22 @@
+{
+  "name": "PointOfSales",
+  "description": "this is my proyect",
+  "main": "index.js",
+  "authors": [
+    "omar duarte"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}

@@ -1,5 +1,6 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :update, :destroy]
+  respond_to :json
 
   # GET /sales
   # GET /sales.json

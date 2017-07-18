@@ -1,0 +1,25 @@
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="#/tickets/new">Create Ticket</a>
+        <h3 class="block">Tickets</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Ticket-id</th>
+                <th>Total</th>
+                <th>PayWith</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            <tr ng-hide="users.length" >
+                <td colspan="5">No users found, Please create one.</td>
+            </tr>
+            <tr ng-show="tickets.length" ng-repeat="ticket in tickets">
+                <td>{{ticket.id}}</td>
+                <td>{{ticket.total}}</td>
+                <td>{{ticket.paywith}}</td>
+                <td>{{ticket.status}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

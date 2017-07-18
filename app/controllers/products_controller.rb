@@ -22,14 +22,22 @@ class ProductsController < ApplicationController
   def edit
   end
 
-  def find
-    respond_to do |format|
-      if params[:bar_code]
-        @product = Product.find_by bar_code: params[:bar_code]
-      end
-      format.json { render json: @product,  notice:  'ok'}
+ def find
+   if params[:keywords].present?
+      @keywords = params[:keywords]
+      product_search_term = ProductSearchTerm.new(@keywords)
+      @product = Product.where(product_search_term.where_clause, product_search_term.where_args)
+    else
+      @product = []
     end
-  end
+    
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @product}
+    end
+
+   
+end
   # POST /products
   # POST /products.json
   def create
@@ -41,7 +49,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to products_url}
         format.json { render :show, status: :created, location:products_url}
       else
-         flash[:danger] = 'There was a problem creating the product.'
+        flash[:danger] = 'There was a problem creating the product.'
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end

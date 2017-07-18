@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
   <title>PointOfSales</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <%= render 'shared/navigation' %>
-<div class="container">
+
 <div class="row">
- 	<p id="notice"><%= notice %></p>
-     <%= yield %>
+ 	<% if notice.present? %>
+		<aside class="alert alert-info">
+			<%= notice %>
+		</aside>
+		<% end %>
+		<% if alert.present? %>
+			<aside class="alert alert-danger">
+		<%= alert %>
+		</aside>
+	<% end %>
 </div>
+<%= yield %>
 </body>
 </html>

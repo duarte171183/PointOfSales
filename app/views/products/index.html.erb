@@ -3,7 +3,8 @@
 <h1>Listing Products</h1>
 </br>
 
-<%= link_to 'New Product', new_product_path %>
+<%= link_to 'New Product', new_product_path, class: "btn btn-primary" %>
+
 </br>
 </br>
 
@@ -13,6 +14,10 @@
           <%= link_to edit_product_path(product), :class=>"thumbnail" do %>
                <%=image_tag product.photo.url :thumb, :size => '260x180' %>
             <%end%>
+               <h2 class="h3">
+                 <%= product.bar_code %>
+               </h2>
+             
                <h2 class="h3">
                  <%= product.name %>
                </h2>
