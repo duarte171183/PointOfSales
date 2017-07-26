@@ -1,7 +1,8 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :update, :destroy]
-  respond_to :json
+  respond_to :html, :json
 
+ 
   # GET /sales
   # GET /sales.json
   def index
@@ -54,12 +55,14 @@ class SalesController < ApplicationController
   # DELETE /sales/1
   # DELETE /sales/1.json
   def destroy
+    @ticket = Ticket.find(params[:ticket_id])
+    @sale = @ticket.sales.find(params[:id])
     @sale.destroy
     respond_to do |format|
-      format.html { redirect_to sales_url, notice: 'Sale was successfully destroyed.' }
+      format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -69,6 +72,6 @@ class SalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-      params.require(:sale).permit(:product_id, :ticket_id, :quantity)
+      params.require(:sale).permit(:product_id, :ticket_id, :quantity, :_destroy, :user_id)
     end
 end

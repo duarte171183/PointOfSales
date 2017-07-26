@@ -1,10 +1,18 @@
 class Ticket < ActiveRecord::Base
 	
 	has_many :sales, :dependent => :destroy
-	has_many :products, :through => :sales
+	has_many :products
 	validates_associated :sales
 	accepts_nested_attributes_for :sales, :reject_if => :all_blank, :allow_destroy=> true 
 	validates_presence_of :subtotal, :total, :pay_with, :change, :presence => true
+	
+	def as_json(options={})
+     #super(:include => [:sales])
+     super(:include => { :sales => {
+                               :include => { :product => {
+                                             :only => [:name, :price] } },
+                               :only => :id} })
+    end
 	
 	def validate_and_save
   	  ActiveRecord::Base.transaction do

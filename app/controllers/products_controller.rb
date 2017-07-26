@@ -35,9 +35,7 @@ class ProductsController < ApplicationController
       format.html {}
       format.json { render json: @product}
     end
-
-   
-end
+  end
   # POST /products
   # POST /products.json
   def create

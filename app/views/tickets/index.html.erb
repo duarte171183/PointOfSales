@@ -1,38 +1,28 @@
-<div ng-app="PointOfSales"> 
-<section>
-	<h1>Seller <%= current_user.alias %></h1>
-</section>
 
-<article ng-controller="ProductSearchController">
-	<section class="search-form">
-	<header>
-		<h1 class="h3">Search</h1>
-	</header>
-		<form>
-			
-				<label for="keywords" class="sr-only">Keywords</label>
-				<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords)" ng-model="keywords">
-		
-		</form>
-	</section>
-	<div class="col-md-6">
-	<section class="search-results">
-		<header>
-			<h1 class="h3">Results</h1>
-		</header>
-		<ol class="list-group" ng-repeat="product in products">
-				<li class="list-group-item clearfix">
-				    <h2 class="pull-right"> {{product.bar_code}}</h2>
-					<h2>{{product.name }} </h2>
-					<img ng-src={{product.photo.thumb.url}} class="img-rounded" />
-					<h3 class="pull-right">Brand:  {{product.brand}} </h3>
-					<h3 >Price: {{product.price }}</h3>
-					<h3 >Stock: {{product.stock}}</h3>
-					<button class="pull-right btn btn-primary" 
-						ng-click="addListItem(product.id, <%= current_user.id %>, product.price)">Add
-					</button>
-				</li>
-		</ol>
-	</section>
-	</div>
-</article>
+<h1>Listing Tickets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.id %></td>
+        <td><%= ticket.total %></td>
+        <td><%= ticket.status %></td>
+        <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+        <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

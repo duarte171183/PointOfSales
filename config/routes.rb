@@ -5,16 +5,19 @@ Rails.application.routes.draw do
   scope "/admin" do
     resources :users
   end
-  resources :users
-  resources :tickets
-  resources :sales do
-    collection { post :create_sales , via: :options  }
-  end
+   
   
+
+  resources :users
+ 
+  resources :tickets do
+    resources :sales, only: [:create, :destroy]
+    collection  do
+      get :findopenticket
+    end
+  end
   root 'welcome#index'
   
-
-
   resources :products do
     collection do
       post :find

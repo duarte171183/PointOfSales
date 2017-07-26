@@ -7,10 +7,18 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @ticket = Ticket.new
-    @ticket.sales.build
+    @tickets = Ticket.all
   end
 
+  
+
+  def findopenticket
+     @openticket = Ticket.where(status: 1)
+     respond_to do |format|
+      format.html {}
+      format.json { render json: @openticket}
+    end
+  end
   # GET /tickets/1
   # GET /tickets/1.json
   def show
@@ -43,7 +51,6 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
-
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.validate_and_save
@@ -96,4 +103,5 @@ class TicketsController < ApplicationController
       params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
                                       :sales_attributes => [:id, :product_id, :quantity, :totalsale, :user_id, :_destroy])
     end
+
 end
