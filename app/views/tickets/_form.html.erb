@@ -1,9 +1,6 @@
 <div ng-app="PointOfSales"> 
-<section>
-	<h1>Seller <%= current_user.alias %></h1>
-</section>
-
 <article ng-controller="ProductSearchController">
+	
 	<section class="search-form">
 	<header>
 		<h1 class="h3">Search</h1>
@@ -11,11 +8,11 @@
 		<form>
 			
 				<label for="keywords" class="sr-only">Keywords</label>
-				<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords)" ng-model="keywords">
+				<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords, <%= current_user.id %>, ticket)" ng-model="keywords"   ng-model-options="{ debounce: 1000 }"/>
 		
 		</form>
 	</section>
-	<div class="col-md-6">
+	<!-- <div class="col-md-6">
 		<section class="search-results">
 			<header>
 				<h1 class="h3">Results</h1>
@@ -29,94 +26,77 @@
 						<h3 >Price: {{product.price }}</h3>
 						<h3 >Stock: {{product.stock}}</h3>
 						<button class="pull-right btn btn-primary" 
-							ng-click="addListItem(product.id, <%= current_user.id %>, product.price)">Add
+							ng-click="addListItem(product.id, <%= current_user.id %>, product.price, ticket)">Add
 						</button>
 					</li>
 			</ol>
 		</section>
-	</div>
-	<div class="col-md-6">
-		<section>
+	</div> -->
+	<section>
+	<div class="col-md-7">
+		
 			<header>
 				<h1 class="h3">List Products</h1>
 				<div ng-repeat="t in ticket">
-					<div ng-repeat="s in t.sales">
+					<div ng-repeat="s in t.sales"">
 							<li class="list-group-item clearfix">
-							    <h2>{{s.id}} </h2>
-							    <h2>{{s.product.name}} </h2>
-							    <h2>{{s.product.price}} </h2>
-								<button class="pull-right btn btn-primary" ng-click="deleteItemProduct(s.id, ticket, t.id)">Delete
-							</button>
+								<div class="col-md-5">
+									<img ng-src={{s.product.photo.thumb.url}} class="img-rounded" />	
+								</div>
+								<div class="col-md-7">
+									
+								    <h2>{{s.product.price}} </h2>
+								    <h2>{{s.product.name}} </h2>
+								</div>
+								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete
+								    </button>	
 							</li>
-						 	<br>
+						<br>
 					 </div>
 				</div>
 			</header>
-		</section>
+		
 	</div>
-	<div class="col-md-12">
-		<section>
-		<div ng-repeat="t in ticket" class="list-group-item clearfix">
-			<header>
-				<h1 class="h3">Ticket number {{t.id}}</h1>
-			</header>
 
-		    <div class="form-group">
-	            <div class="col-md-3">
-	            <label class="control-label">Total</label>
-	                <h1 class="h5">{{t.total}}</h1>
-	            </div>
-	       		<div class="col-md-3">
-	            <label class="control-label">Subtotal</label>
-	       		    <h1 class="h5">{{t.subtotal}}</h1>
-	            </div>
-	            <div class="col-md-3">
-	            <label class="control-label">Paywith</label>
-	               <input type="text" class="form-control" ng-model="t.pay_with" placeholder="Product"/>
-	            </div>
-	        </div>
-	        <hr/>
-	    </div>
-	    </section>	
-    </div>
+	<div class="col-md-5">
+		<header>
+		<div ng-model="ticket">
+			<h3>Ticket number {{ticket[0].id}}</h3>
+       	</div>
+
+		<div ng-model="ticket" class="list-group-item clearfix">
+			     <div class="col-md-6">
+		            <label class="control-label, h1">Total</label>
+		                <h1 class="h1">{{ticket[0].total}}</h1>
+		                <br>
+		        </div>
+		       <div class="col-md-12"> 
+		        <form role="form" name="payForm" novalidate="">
+			        <div class="form-group" data-ng-class="{'has-error' :!payForm.pay.$valid}">
+			        
+				            <label class="control-label h1" for="pay">Paywith</label>
+				              <input class="form-control" ensure-prime name="pay" ng-model="pay_with" type="number" min="0" data-total="{{ticket[0].total}}" required/>
+				              <span class="help-block h3" data-ng-show="payForm.pay.$error.required">This is required.</span>
+				              <span class="help-block h3" data-ng-show="payForm.pay.$error.number"> Not valid number!</span>
+				              <div class="help-block h3" ng-show="payForm.pay.$invalid">
+							     The total is greater than pay
+							</div>
+				              <!-- <span class="help-block h3" data-ng-show="{{ticket[0].total}}>=pay"> Total is greater than pay!</span> -->
+				               <!--  <i hm-tap="payForm.pay = ''" ng-if="payForm.pay.$viewValue>=${{ticket.total}}">!</i> -->
+				         </div>
+				
+				         <div class="col-md-12">
+				            		<button class="pull-right btn btn-success btn-lg btn-block" ng-click=" pay()" ng-disabled="payForm.$invalid">Pay 
+									</button>
+				         </div>
+				  
+				     <br>
+				</form>
+			  	</div>   	
+		        <hr/>
+	      </div>
+	 </header>		
+	</div>
+	</section>
 </article>
 </div>
-<!-- <div ng-repeat="sales in ticket.sales">
-    <div ng-hide="sales._destroy">
-        <div class="form-group">
-            <label class="control-label col-md-2">Address 1 </label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.street1" placeholder="Address 1"/>
-            </div>
-            <label class="control-label col-md-2">Address 2 </label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.street2" placeholder="Address 2"/>
-            </div>
-            <div class="col-md-2">
-                <a ng-click="removeAddress($index, user)" class="btn btn-xs btn-danger">X</a>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">City </label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.city" placeholder="Pune"/>
-            </div>
-            <label class="control-label col-md-2">State </label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.state" placeholder="MH"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Country</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.country" placeholder="India"/>
-            </div>
-            <label class="control-label col-md-2">Zipcode </label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" ng-model="address.zipcode" placeholder="12345"/>
-            </div>
-        </div>
-        <hr/>
-    </div>
-</div>
- -->

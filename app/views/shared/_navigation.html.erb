@@ -17,12 +17,14 @@
       <% if user_signed_in? %>
         <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Products", products_path %></li>
-          <li><%= link_to "Tickets", tickets_path %></li>
+          <li><%= link_to "Ticket", new_ticket_path %></li>
         <% if current_user.has_role? :admin %>
           <li><%= link_to "User", users_path %></li>
         <% end %>
        <% end %>
       </ul>
+      
+      
       <ul class="nav navbar-nav navbar-right">
          <% if user_signed_in? %>
           <li class="dropdown">

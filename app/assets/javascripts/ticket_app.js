@@ -18,38 +18,37 @@ app.factory('Ticket', ['$resource', function($resource){
 
 app.factory('Sales_Tickets', ['$resource', function($resource){
   return $resource('/tickets/:ticket_id/sales/:id.json', {}, {
-    //show: { method: 'GET' },
-    update: { method: 'PUT', params: {ticket: '@ticket_id', id: '@id'} },
     delete: { method: 'DELETE', params: {ticket: '@ticket_id', id: '@id'} }
   });
 }]);
 
 app.factory('Sales_Ticket', ['$resource',function($resource){
   return $resource('/tickets/:ticket_id/sales', {}, {
-    query: { method: 'GET', isArray: true },
-    create: { method: 'POST' }
+    create: { method: 'POST', params:{ticket_id: '@ticket_id'} }
   })
 }]);
 
-
-
-app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tickets', 'Ticket', 'Sales_Tickets',
-  function($scope , $http, $location, Tickets, Ticket, Sales_Ticket) {                         
-
-    
-    $http.get("/tickets/findopenticket.json").success(
-        function(data,status,headers,config) { 
-          $scope.ticket = data;
-          $scope.loading =false;
-      }).error(
-        function(data,status,headers,config) {
-          $scope.loading = false;
-          alert("There was a problem: " + status);
-       });
+//Controller
+app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tickets', 'Ticket', 'Sales_Tickets', 'Sales_Ticket',
+  function($scope , $http, $location, Tickets, Ticket, Sales_Tickets, Sales_Ticket) {                         
    
 
 
-    $scope.search = function(searchTerm) { 
+  $scope.findticket=function(){
+    $http.get("/tickets/findopenticket.json").success(
+        function(data,status,headers,config) { 
+          $scope.ticket = data;
+      }).error(
+        function(data,status,headers,config) {
+          alert("There was a problem: " + status);
+       });
+     $scope.keywords= null;
+     $scope.pay_with = null;
+   };    
+
+   $scope.findticket();
+
+    $scope.search = function(searchTerm, user_id, ticket) { 
       $scope.loading = true;
       
       if (searchTerm.length < 3) {
@@ -60,53 +59,147 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
                 { "params": { "keywords": searchTerm } }
       ).success(
         function(data,status,headers,config) { 
-          $scope.productssearch = data;
+          var productssearch = data;
+          $scope.addListItem(productssearch[0].id, 1, productssearch[0].price);
           $scope.loading = false;
+
       }).error(
         function(data,status,headers,config) {
           $scope.loading = false;
           alert("There was a problem: " + status);
         });
+      $scope.keywords= null;
+      $scope.pay_with = null;
+      
     };
    
   
-  $scope.addListItem = function(sale_id, ticket){
-    if(ticket.length>0){
-      console.log(ticket, "tienes datos");
+  $scope.addListItem = function(product_id, user_id, product_price, ticket){
+     var ticket_id = $scope.ticket[0].id;
+     $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : product_price };
+   
+    if(ticket!=='null'){
+      Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
+       $scope.findticket();
+      });
     }
     else
     {
-     console.log(ticket,"no tiene datos");
-    }
-
-
-  };
+        $scope.ticket = {"subtotal": price, "total": price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
+              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : price} ]}
+        console.log($scope.ticket);
+        Tickets.create({ticket: $scope.ticket}, function(){
+           $scope.findticket();
+         }, function(error){
+           console.log(error)
+         });
+     }
+   };
   
    $scope.deleteItemProduct = function(sale_id, ticket, ticket_id){
    
       Sales_Tickets.delete({ticket_id: ticket_id, id: sale_id}, function(){
-       $scope.loading =false;
+       $scope.findticket();
       });
+  };
+
+  $scope.pay =function(){
+
   };
 }]);
 
- // app.controller("addListItem", ['$scope', '$resource', 'Tickets', '$location', 
- //   function($scope, $resource, Tickets, $location, productid, user_id ) 
- //   {
- //     $scope.ticket = {"subtotal": price, "total": price, "pay_with": 0, "change": 0, "status":1, 
- //              sales_attributes: [{ "product_id": productid, "quantity" : '1', "totalsale" : price, "user_id" : user_id } ]}
- //        console.log($scope.ticket);
- //        Tickets.create({ticket: $scope.ticket}, function(){
- //          $location.path();
- //         }, function(error){
- //           console.log(error)
- //         });
- //     }
- // ]);
+app.directive('ensurePrime', function() {
 
- // var address = user.addresses[index];
- //    if(address.id){
- //      address._destroy = true;
- //    }else{
- //      user.addresses.splice(index, 1);
- //    }
+  return {
+
+    require: 'ngModel',
+    restrict: 'A',
+       link: function(scope, element, attrs, ctrl) {
+       
+        function isPrime(n) {
+          
+          if (n>=attrs.total) {
+            console.log(n+attrs.total);
+            return true;
+          }
+        return false;
+      }
+    
+    scope.$watch(attrs.ngModel, function(newval) {
+    if (isPrime(newval)) {
+      ctrl.$setValidity('prime', true);
+    }
+    else {
+      ctrl.$setValidity('prime', false);
+    }
+    });
+  }
+}
+});
+
+
+// return {
+//         restrict: 'A',
+//         require: 'ngModel',
+//         link: function(scope, elm, attrs, ctrl) {
+
+//             function validateEqual(myValue, otherValue) {
+//                 if (myValue === otherValue) {
+//                     ctrl.$setValidity('equal', true);
+//                     return myValue;
+//                 } else {
+//                     ctrl.$setValidity('equal', false);
+//                     return undefined;
+//                 }
+//             }
+
+//             scope.$watch(attrs.uiValidateEquals, function(otherModelValue) {
+//                 validateEqual(ctrl.$viewValue, otherModelValue);               
+//             });
+
+//             ctrl.$parsers.unshift(function(viewValue) {
+//                 return validateEqual(viewValue, scope.$eval(attrs.uiValidateEquals));
+//             });
+
+//             ctrl.$formatters.unshift(function(modelValue) {
+//                 return validateEqual(modelValue, scope.$eval(attrs.uiValidateEquals));                
+//             });
+//         }
+//     };
+
+// app.directive('lowerThan', [ '$scope',
+//   function() {
+
+//     console.log(lowerThan);
+//     var link = function($scope, $element, $attrs, ctrl) {
+
+//       var validate = function(viewValue) {
+//         var comparisonModel = $attrs.lowerThan;
+        
+//         if(!viewValue || !comparisonModel){
+//           // It's valid because we have nothing to compare against
+//           ctrl.$setValidity('lowerThan', true);
+//         }
+
+//         // It's valid if model is lower than the model we're comparing against
+//         ctrl.$setValidity('lowerThan', parseInt(viewValue, 10) < parseInt(comparisonModel, 10) );
+//         return viewValue;
+//       };
+
+//       ctrl.$parsers.unshift(validate);
+//       ctrl.$formatters.push(validate);
+
+//       $attrs.$observe('lowerThan', function(comparisonModel){
+//         return validate(ctrl.$viewValue);
+//       });
+      
+//     };
+
+//     return {
+//       controller: "ProductSearchController",
+//       require: 'ngModel',
+//       link: link
+//     };
+
+//   }
+// ]);

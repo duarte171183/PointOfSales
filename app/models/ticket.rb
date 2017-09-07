@@ -9,9 +9,13 @@ class Ticket < ActiveRecord::Base
 	def as_json(options={})
      #super(:include => [:sales])
      super(:include => { :sales => {
-                               :include => { :product => {
-                                             :only => [:name, :price] } },
-                               :only => :id} })
+           :include => { :product => {
+           :include  => { :photo => {
+           :include  => { :thumb => {
+           					   :only => :url } },
+           					   :only => :url } },
+                               :only => [:name, :price] } },
+                               :only => :id} } )
     end
 	
 	def validate_and_save

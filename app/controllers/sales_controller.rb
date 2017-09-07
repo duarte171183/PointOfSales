@@ -6,7 +6,7 @@ class SalesController < ApplicationController
   # GET /sales
   # GET /sales.json
   def index
-    @sales = Sales.all
+    
   end
   
   # GET /sales/1
@@ -16,7 +16,7 @@ class SalesController < ApplicationController
 
   # GET /sales/new
   def new
-    @sale = Sales.new
+    
   end
 
   # GET /sales/1/edit
@@ -26,17 +26,14 @@ class SalesController < ApplicationController
   # POST /sales
   # POST /sales.json
   def create
-    @sale = Sales.new(sale_params)
-    respond_to do |format|
-      if @sale.save
-        format.html { redirect_to sales_path(@sale)}
-        format.json { render :show, status: :created, location: @sale }
-      else
-        format.html { render :new }
-        format.json { render json: @sale.errors, status: :unprocessable_entity }
-      end
+    @ticket = Ticket.find(params[:ticket_id])
+    @sale = @ticket.sales.create(sale_params)
+    @ticket.update_columns(total: @ticket.total+@sale.totalsale)
+     respond_to do |format|
+      format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
+      format.json { head :no_content }
     end
-  end
+ end
 
   # PATCH/PUT /sales/1
   # PATCH/PUT /sales/1.json
@@ -58,6 +55,7 @@ class SalesController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
     @sale = @ticket.sales.find(params[:id])
     @sale.destroy
+    @ticket.update_columns(total: @ticket.total-@sale.totalsale)
     respond_to do |format|
       format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
       format.json { head :no_content }
@@ -72,6 +70,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-      params.require(:sale).permit(:product_id, :ticket_id, :quantity, :_destroy, :user_id)
+      params.require(:sale).permit(:product_id, :ticket_id, :quantity, :_destroy, :totalsale)
     end
 end

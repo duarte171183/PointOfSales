@@ -13,7 +13,7 @@ class TicketsController < ApplicationController
   
 
   def findopenticket
-     @openticket = Ticket.where(status: 1)
+     @openticket = Ticket.where(status: 1, user_id: current_user.id)
      respond_to do |format|
       format.html {}
       format.json { render json: @openticket}
@@ -101,7 +101,7 @@ class TicketsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
       params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
-                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale, :user_id, :_destroy])
+                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale,  :_destroy])
     end
 
 end
