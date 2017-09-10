@@ -24,7 +24,7 @@ module PointOfSales
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.assets.precompile.shift
+    config.assets.initialize_on_precompile = false
     # Do not swallow errors in after_commit/after_rollback callbacks.
     root.join('vendor', 'assets', 'bower_components').to_s.tap do |bower_path| 
         config.sass.load_paths << bower_path
