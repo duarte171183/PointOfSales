@@ -17,7 +17,6 @@
 //= require angular
 //= require angular-route/angular-route
 //= require angular-rails-templates
-//= require_tree ../templates
 //= require angular-resource
 //= require turbolinks
 //= require_tree .
