@@ -52,7 +52,6 @@ gem 'ng-rails-csrf'
 
 group :production do
 	gem 'rails_12factor'
-	gem 'heroku_rails_deflate'
 end
 
 group :development, :test do
