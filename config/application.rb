@@ -24,6 +24,7 @@ module PointOfSales
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.assets.precompile.shift
     # Do not swallow errors in after_commit/after_rollback callbacks.
     root.join('vendor', 'assets', 'bower_components').to_s.tap do |bower_path| 
         config.sass.load_paths << bower_path
@@ -33,7 +34,15 @@ module PointOfSales
     config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
     # Precompile Bootstrap fonts
     config.assets.precompile << %r(bootstrap-sass/assets/fonts/bootstrap/[\w-]+\.(?:eot|svg|ttf|woff2?)$)
+    config.assets.precompile.push(Proc.new do |path|
+      File.extname(path).in? [
+        '.html', '.erb', '.haml',                 # Templates
+        '.png',  '.gif', '.jpg', '.jpeg', '.svg', # Images
+        '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
+      ]
+    end)
     # Minimum Sass number precision required by bootstrap-sass
+    
     ::Sass::Script::Value::Number.precision = [8, ::Sass::Script::Value::Number.precision].max
     
     config.active_record.raise_in_transactional_callbacks = true

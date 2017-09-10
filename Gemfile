@@ -41,7 +41,10 @@ gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
-gem 'rails_12factor', group: :production
+group :production, :staging do
+  gem 'heroku_rails_deflate'
+  gem 'rails_12factor'
+end
 #use pdf report
 gem 'prawn', '~> 2.1'
 gem 'prawn-table', '~> 0.2.2'
