@@ -41,8 +41,7 @@ gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
-gem 'rails_12factor', group: :production
-gem 'heroku_rails_deflate', group: :production
+
 #use pdf report
 gem 'prawn', '~> 2.1'
 gem 'prawn-table', '~> 0.2.2'
@@ -50,6 +49,11 @@ gem 'prawn-table', '~> 0.2.2'
 gem 'apartment'
 gem 'currency-in-words'
 gem 'ng-rails-csrf'
+
+group :production do
+	gem 'rails_12factor'
+	gem 'heroku_rails_deflate'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
