@@ -1,0 +1,3 @@
+$(":file").filestyle({
+  input: false
+})

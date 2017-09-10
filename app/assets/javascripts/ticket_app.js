@@ -9,9 +9,9 @@ app.factory('Tickets', ['$resource',function($resource){
 }]);
 
 app.factory('Ticket', ['$resource', function($resource){
-  return $resource('/ticket/:id.json', {}, {
+  return $resource('/tickets/:id.json', {}, {
     show: { method: 'GET' },
-    update: { method: 'PUT', params: {id: '@id'} },
+    update: { method: 'PUT', params: {id: '@id', status: '@status'} },
     delete: { method: 'DELETE', params: {id: '@id'} }
   });
 }]);
@@ -59,8 +59,9 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
                 { "params": { "keywords": searchTerm } }
       ).success(
         function(data,status,headers,config) { 
+          console.log(user_id);
           var productssearch = data;
-          $scope.addListItem(productssearch[0].id, 1, productssearch[0].price);
+          $scope.addListItem(productssearch[0].id, user_id, productssearch[0].price);
           $scope.loading = false;
 
       }).error(
@@ -69,31 +70,35 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
           alert("There was a problem: " + status);
         });
       $scope.keywords= null;
+      $scope.change=$scope.pay_with-$scope.total;
       $scope.pay_with = null;
       
     };
    
   
-  $scope.addListItem = function(product_id, user_id, product_price, ticket){
-     var ticket_id = $scope.ticket[0].id;
-     $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : product_price };
-   
-    if(ticket!=='null'){
-      Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
+  $scope.addListItem = function(product_id, user_id, product_price){
+    
+    console.log(angular.isDefined($scope.ticket[0]));
+    console.log($scope.ticket.length);
+    
+    if(angular.isDefined($scope.ticket[0])){
+        var ticket_id = $scope.ticket[0].id;  
+       $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : product_price };
+       Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
        $scope.findticket();
       });
-    }
+     }
     else
     {
-        $scope.ticket = {"subtotal": price, "total": price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : price} ]}
+     $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
+              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : product_price} ]}
         console.log($scope.ticket);
         Tickets.create({ticket: $scope.ticket}, function(){
            $scope.findticket();
          }, function(error){
            console.log(error)
-         });
-     }
+         });   
+    }
    };
   
    $scope.deleteItemProduct = function(sale_id, ticket, ticket_id){
@@ -104,7 +109,10 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   };
 
   $scope.pay =function(){
-
+    var ticket_id = $scope.ticket[0].id;
+    Ticket.update({id: ticket_id, status: 2 }, function(){
+     $scope.findticket();
+    });
   };
 }]);
 
@@ -137,69 +145,3 @@ app.directive('ensurePrime', function() {
 }
 });
 
-
-// return {
-//         restrict: 'A',
-//         require: 'ngModel',
-//         link: function(scope, elm, attrs, ctrl) {
-
-//             function validateEqual(myValue, otherValue) {
-//                 if (myValue === otherValue) {
-//                     ctrl.$setValidity('equal', true);
-//                     return myValue;
-//                 } else {
-//                     ctrl.$setValidity('equal', false);
-//                     return undefined;
-//                 }
-//             }
-
-//             scope.$watch(attrs.uiValidateEquals, function(otherModelValue) {
-//                 validateEqual(ctrl.$viewValue, otherModelValue);               
-//             });
-
-//             ctrl.$parsers.unshift(function(viewValue) {
-//                 return validateEqual(viewValue, scope.$eval(attrs.uiValidateEquals));
-//             });
-
-//             ctrl.$formatters.unshift(function(modelValue) {
-//                 return validateEqual(modelValue, scope.$eval(attrs.uiValidateEquals));                
-//             });
-//         }
-//     };
-
-// app.directive('lowerThan', [ '$scope',
-//   function() {
-
-//     console.log(lowerThan);
-//     var link = function($scope, $element, $attrs, ctrl) {
-
-//       var validate = function(viewValue) {
-//         var comparisonModel = $attrs.lowerThan;
-        
-//         if(!viewValue || !comparisonModel){
-//           // It's valid because we have nothing to compare against
-//           ctrl.$setValidity('lowerThan', true);
-//         }
-
-//         // It's valid if model is lower than the model we're comparing against
-//         ctrl.$setValidity('lowerThan', parseInt(viewValue, 10) < parseInt(comparisonModel, 10) );
-//         return viewValue;
-//       };
-
-//       ctrl.$parsers.unshift(validate);
-//       ctrl.$formatters.push(validate);
-
-//       $attrs.$observe('lowerThan', function(comparisonModel){
-//         return validate(ctrl.$viewValue);
-//       });
-      
-//     };
-
-//     return {
-//       controller: "ProductSearchController",
-//       require: 'ngModel',
-//       link: link
-//     };
-
-//   }
-// ]);

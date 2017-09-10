@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.turbolinks
-//require angular/angular
+//= require angular/angular
 //= require angular
 //= require angular-route/angular-route
 //= require angular-rails-templates
@@ -22,3 +22,7 @@
 //= require turbolinks
 //= require_tree .
 //= require ng-rails-csrf
+//= require bootstrap-filestyle
+//= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
+
+

@@ -9,8 +9,9 @@
       
     </div>
   <% end %>
-
-  <div class="field">
+  
+  
+  <div class="form-group">
     <%= f.label :bar_code %><br>
     <%= f.text_field :bar_code, class: 'form-control'%>
   </div>
@@ -23,20 +24,8 @@
     <%= f.text_field :brand, class: 'form-control' %>
   </div>
   <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price,  class: 'form-control' %>
-  </div>
-  <div class="field">
-    <%= f.label :purchaseprice %><br>
-    <%= f.text_field :purchaseprice, class: 'form-control' %>
-  </div>
-  <div class="field">
     <%= f.label :dateofexpiry %><br>
     <%= f.date_select :dateofexpiry, class: 'form-control' %>
-  </div>
-  <div class="field">
-    <%= f.label :stock %><br>
-    <%= f.number_field :stock, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :minstock %><br>
@@ -51,9 +40,11 @@
     <%= f.text_area :description, class: 'form-control' %>
   </div>
   <div class="field">
-    <%= f.file_field :photo %>
+    <%= f.label :photo %>
+    <%= f.file_field :photo, accept: 'image/png,image/gif,image/jpeg', class: "filestyle" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-success"%>
   </div>
+
 <% end %>

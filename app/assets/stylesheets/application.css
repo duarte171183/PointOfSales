@@ -15,7 +15,7 @@ $icon-font-path: "bootstrap-sass/assets/fonts/bootstrap/";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
  *= require_tree .
  *= require_self
-  *= require 'bootstrap-sass-official'
+ *= require 'bootstrap-sass-official'
  */
 
 

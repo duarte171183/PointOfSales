@@ -1,13 +1,8 @@
 
-
-<h1>Listing Products</h1>
-</br>
-
-<%= link_to 'New Product', new_product_path, class: "btn btn-primary" %>
-
-</br>
-</br>
-
+<div class="page-header">
+  <%= link_to 'New Product', new_product_path, class: "btn btn-primary pull-right" %>
+  <h1>Listing Products</h1>
+</div>
 <div class="row">
   <% @products.each do |product| %>
       <div class="col-xs-6 col-md-3">

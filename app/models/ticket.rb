@@ -7,7 +7,7 @@ class Ticket < ActiveRecord::Base
 	validates_presence_of :subtotal, :total, :pay_with, :change, :presence => true
 	
 	def as_json(options={})
-     #super(:include => [:sales])
+  
      super(:include => { :sales => {
            :include => { :product => {
            :include  => { :photo => {

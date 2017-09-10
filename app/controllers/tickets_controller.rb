@@ -24,6 +24,7 @@ class TicketsController < ApplicationController
   def show
     respond_to do |format|
       format.html
+      format.json
       format.pdf do 
         pdf = TicketPdf.new(@ticket, view_context)
         send_data pdf.render, filename: "ticket_#{@ticket.id}.pdf",
@@ -100,7 +101,7 @@ class TicketsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
-      params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, 
+      params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, :user_id,
                                       :sales_attributes => [:id, :product_id, :quantity, :totalsale,  :_destroy])
     end
 

@@ -1,6 +1,8 @@
-<h1>Editing Product</h1>
+<div class="page-header">
+	<%= link_to 'Cancel', products_path, class: "btn btn-danger pull-right"%>
+	<h1><%=@product.name%></h1>
 
+</div>
 <%= render 'form' %>
 
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+
