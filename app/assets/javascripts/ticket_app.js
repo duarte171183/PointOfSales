@@ -82,22 +82,24 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     console.log($scope.ticket.length);
     
     if(angular.isDefined($scope.ticket[0])){
-        var ticket_id = $scope.ticket[0].id;  
-       $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : product_price };
-       Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
+      var ticket_id = $scope.ticket[0].id;  
+      $scope.sales_attributes={ "product_id": product_id, "quantity" : '1' };
+      Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
        $scope.findticket();
-      });
+      }, function(error){
+         console.log(error)
+      });   
      }
     else
     {
      $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : product_price} ]}
+              sales_attributes: [{ "product_id": product_id, "quantity" : '1'} ]}
         console.log($scope.ticket);
-        Tickets.create({ticket: $scope.ticket}, function(){
-           $scope.findticket();
-         }, function(error){
-           console.log(error)
-         });   
+      Tickets.create({ticket: $scope.ticket}, function(){
+        $scope.findticket();
+      }, function(error){
+         console.log(error)
+      });   
     }
    };
   
@@ -105,14 +107,18 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
    
       Sales_Tickets.delete({ticket_id: ticket_id, id: sale_id}, function(){
        $scope.findticket();
-      });
+      },function(error){
+         console.log(error)
+      });   
   };
 
   $scope.pay =function(){
     var ticket_id = $scope.ticket[0].id;
     Ticket.update({id: ticket_id, status: 2 }, function(){
      $scope.findticket();
-    });
+    },function(error){
+         console.log(error)
+      });   
   };
 }]);
 
@@ -126,7 +132,7 @@ app.directive('ensurePrime', function() {
        
         function isPrime(n) {
           
-          if (n>=attrs.total) {
+          if (n>=attrs.total&&attrs.total>0) {
             console.log(n+attrs.total);
             return true;
           }

@@ -44,9 +44,8 @@
 									<img ng-src={{s.product.photo.thumb.url}} class="img-rounded" />	
 								</div>
 								<div class="col-md-7">
-									
-								    <h2>{{s.product.price}} </h2>
-								    <h2>{{s.product.name}} </h2>
+									 <h2>{{s.product.name}} </h2>
+									<h2>{{s.quantity}} x {{s.product.price}} = {{s.totalsale}}</h2>
 								</div>
 								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete
 								    </button>	

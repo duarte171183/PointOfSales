@@ -18,6 +18,7 @@
         <td><%= ticket.total %></td>
         <td><%= ticket.status %></td>
         <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
+        <td><%= link_to 'show', ticket %></td>
         <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
