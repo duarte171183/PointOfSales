@@ -80,10 +80,10 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     
     console.log(angular.isDefined($scope.ticket[0]));
     console.log($scope.ticket.length);
-    
+    var totalsale = product_price*1;
     if(angular.isDefined($scope.ticket[0])){
       var ticket_id = $scope.ticket[0].id;  
-      $scope.sales_attributes={ "product_id": product_id, "quantity" : '1' };
+      $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : totalsale };
       Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
        $scope.findticket();
       }, function(error){
@@ -93,7 +93,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     else
     {
      $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-              sales_attributes: [{ "product_id": product_id, "quantity" : '1'} ]}
+              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : totalsale} ]}
         console.log($scope.ticket);
       Tickets.create({ticket: $scope.ticket}, function(){
         $scope.findticket();

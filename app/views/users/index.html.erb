@@ -1,7 +1,10 @@
-<h1>Listing Users</h1>
-<% if current_user.has_role? :admin %>
-  <%= link_to 'New User', new_user_path %>
-<% end %>  
+<div class="page-header">
+  <% if current_user.has_role? :admin %>
+    <%= link_to 'New User', new_user_path, class: "btn btn-primary pull-right" %>
+  <% end %>  
+  <h1>Listing Users</h1>
+</div>
+
 <table>
   <thead>
     <tr>

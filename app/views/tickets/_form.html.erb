@@ -34,8 +34,6 @@
 	</div> -->
 	<section>
 	<div class="col-md-7">
-		
-			<header>
 				<h1 class="h3">List Products</h1>
 				<div ng-repeat="t in ticket">
 					<div ng-repeat="s in t.sales"">
@@ -45,7 +43,7 @@
 								</div>
 								<div class="col-md-7">
 									 <h2>{{s.product.name}} </h2>
-									<h2>{{s.quantity}} x {{s.product.price}} = {{s.totalsale}}</h2>
+									<h2>{{s.quantity}} x ${{s.product.price}} = ${{s.totalsale}}</h2>
 								</div>
 								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete
 								    </button>	
@@ -53,22 +51,19 @@
 						<br>
 					 </div>
 				</div>
-			</header>
 		
 	</div>
-
 	<div class="col-md-5">
-		<header>
+		
 		<div ng-model="ticket">
 			<h3>Ticket number {{ticket[0].id}}</h3>
        	</div>
 
-		<div ng-model="ticket" class="list-group-item clearfix">
-			     <div class="col-md-6">
-		            <label class="control-label, h1">Total</label>
-		                <h1 class="h1">{{ticket[0].total}}</h1>
-		                <br>
-		        </div>
+		<div ng-model="ticket">
+			     <div class="col-md-12">
+		                <h1>Total: ${{ticket[0].total}}</h1>
+		                <h1><%= number_to_currency( {{ticket[0].total}} ) %></h1>
+		         </div>
 		       <div class="col-md-12"> 
 		        <form role="form" name="payForm" novalidate="">
 			        <div class="form-group" data-ng-class="{'has-error' :!payForm.pay.$valid}">
@@ -80,8 +75,6 @@
 				              <div class="help-block h3" ng-show="payForm.pay.$invalid">
 							     The total is greater than pay
 							</div>
-				              <!-- <span class="help-block h3" data-ng-show="{{ticket[0].total}}>=pay"> Total is greater than pay!</span> -->
-				               <!--  <i hm-tap="payForm.pay = ''" ng-if="payForm.pay.$viewValue>=${{ticket.total}}">!</i> -->
 				         </div>
 				
 				         <div class="col-md-12">
@@ -92,9 +85,7 @@
 				     <br>
 				</form>
 			  	</div>   	
-		        <hr/>
 	      </div>
-	 </header>		
 	</div>
 	</section>
 </article>

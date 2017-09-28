@@ -27,37 +27,38 @@ class SalesController < ApplicationController
   # POST /sales.json
   def create
     @ticket = Ticket.find(params[:ticket_id])
-    puts "EXISTE #{@sale =@ticket.products.exists?(sale_params[:product_id])}"
+    
     if @sale =@ticket.products.exists?(sale_params[:product_id])
        @sale_first=@ticket.sales.where(product_id: sale_params[:product_id]).first
-       @sale=@ticket.sales.update_all(quantity: sale_params[:quantity].to_d+@sale_first.quantity, totalsale: (sale_params[:quantity].to_d+@sale_first.quantity)* @sale_first.product.price)
-       byebug
-       @sale=@ticket.sales.where(product_id: sale_params[:product_id]).first
-       @ticket.update_columns(total: @ticket.total+@sale.totalsale)
+       @sale_first.update(quantity: sale_params[:quantity].to_d+@sale_first.quantity, totalsale: (sale_params[:totalsale].to_d+@sale_first.totalsale))
     else
        @sale = @ticket.sales.create(sale_params)  
-       @sale.update_totalsale(@sale.product_id, @sale.quantity, false)
-       @ticket.update_columns(total: @ticket.total+@sale.totalsale)
-    end
+    end  
+    
     respond_to do |format|
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
-        format.json { render :show, status: :created, location: @ticket }
+      if @ticket.update_columns(total: @ticket.total+sale_params[:totalsale])
+         format.html { redirect_to tickets_url, notice: 'Product is add' }
+         format.json { head :no_content }
+      else
+         format.html { redirect_to tickets_url, notice: 'Error in sale' }
+         format.json { render json: @sale.errors, status: :unprocessable_entity }
+      end
     end
  end
 
   # PATCH/PUT /sales/1
   # PATCH/PUT /sales/1.json
-  def update
-    respond_to do |format|
-      if @sale.update(sale_params)
-        format.html { redirect_to sales_path(@sale)}
-        format.json { render :show, status: :ok, location: @sale }
-      else
-        format.html { render :edit }
-        format.json { render json: @sale.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @sale.update(sale_params)
+  #       format.html { redirect_to sales_path(@sale)}
+  #       format.json { render :show, status: :ok, location: @sale }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @sale.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /sales/1
   # DELETE /sales/1.json
@@ -80,6 +81,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-      params.require(:sale).permit(:product_id, :ticket_id, :quantity, :_destroy)
+      params.require(:sale).permit(:product_id, :ticket_id, :quantity, :totalsale, :_destroy)
     end
 end
