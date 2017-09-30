@@ -31,12 +31,13 @@ class SalesController < ApplicationController
     if @sale =@ticket.products.exists?(sale_params[:product_id])
        @sale_first=@ticket.sales.where(product_id: sale_params[:product_id]).first
        @sale_first.update(quantity: sale_params[:quantity].to_d+@sale_first.quantity, totalsale: (sale_params[:totalsale].to_d+@sale_first.totalsale))
+       @sale_first.destroy if @sale_first.quantity<=0
     else
        @sale = @ticket.sales.create(sale_params)  
     end  
     
     respond_to do |format|
-      if @ticket.update_columns(total: @ticket.total+sale_params[:totalsale])
+      if @ticket.update_columns(@ticket.total+sale_params[:totalsale] < 0 ?  total=0 : total=@ticket.total+sale_params[:totalsale])
          format.html { redirect_to tickets_url, notice: 'Product is add' }
          format.json { head :no_content }
       else
@@ -66,7 +67,7 @@ class SalesController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
     @sale = @ticket.sales.find(params[:id])
     @sale.destroy
-    @ticket.update_columns(total: @ticket.total-@sale.totalsale)
+    @ticket.update_columns(total: @ticket.total+sale_params[:totalsale] < 0 ?  total=0 : total=@ticket.total+sale_params[:totalsale])
     respond_to do |format|
       format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
       format.json { head :no_content }

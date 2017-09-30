@@ -2,11 +2,10 @@
 <article ng-controller="ProductSearchController">
 	
 	<section class="search-form">
-	<header>
-		<h1 class="h3">Search</h1>
-	</header>
 		<form>
-			
+				<header>
+					<h1 ng-model="operation" ng-change="search(keywords)">{{operation}}</h1>
+				</header>
 				<label for="keywords" class="sr-only">Keywords</label>
 				<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords, <%= current_user.id %>, ticket)" ng-model="keywords"   ng-model-options="{ debounce: 1000 }"/>
 		
@@ -45,7 +44,7 @@
 									 <h2>{{s.product.name}} </h2>
 									<h2>{{s.quantity}} x ${{s.product.price}} = ${{s.totalsale}}</h2>
 								</div>
-								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete
+								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete All
 								    </button>	
 							</li>
 						<br>
@@ -54,7 +53,6 @@
 		
 	</div>
 	<div class="col-md-5">
-		
 		<div ng-model="ticket">
 			<h3>Ticket number {{ticket[0].id}}</h3>
        	</div>
@@ -62,7 +60,6 @@
 		<div ng-model="ticket">
 			     <div class="col-md-12">
 		                <h1>Total: ${{ticket[0].total}}</h1>
-		                <h1><%= number_to_currency( {{ticket[0].total}} ) %></h1>
 		         </div>
 		       <div class="col-md-12"> 
 		        <form role="form" name="payForm" novalidate="">

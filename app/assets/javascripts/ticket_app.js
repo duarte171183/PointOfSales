@@ -1,4 +1,4 @@
-var app = angular.module('PointOfSales',['ngRoute', 'ngResource', 'templates', 'ng-rails-csrf' ]);
+var app = angular.module('PointOfSales',['ngRoute', 'ngResource', 'ng-rails-csrf' ]);
 
 //Factory
 app.factory('Tickets', ['$resource',function($resource){
@@ -32,6 +32,7 @@ app.factory('Sales_Ticket', ['$resource',function($resource){
 app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tickets', 'Ticket', 'Sales_Tickets', 'Sales_Ticket',
   function($scope , $http, $location, Tickets, Ticket, Sales_Tickets, Sales_Ticket) {                         
    
+  var quantity=1;
 
 
   $scope.findticket=function(){
@@ -44,6 +45,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
        });
      $scope.keywords= null;
      $scope.pay_with = null;
+     quantity=1;
    };    
 
    $scope.findticket();
@@ -51,7 +53,22 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     $scope.search = function(searchTerm, user_id, ticket) { 
       $scope.loading = true;
       
-      if (searchTerm.length < 3) {
+      if (searchTerm.length < 6) {
+        
+        console.log("valor de search"+searchTerm);
+        if(searchTerm.includes("+"))
+        {
+          $scope.operation=searchTerm;
+          quantity=parseFloat(searchTerm.match(/\d+$/));
+          $scope.keywords=null;
+        }
+        if(searchTerm.includes("-"))
+        {
+          $scope.operation=searchTerm;
+          quantity=parseFloat(searchTerm.match(/\d+$/)*-1);
+          $scope.keywords=null;
+        }
+
         return;
       }  
       
@@ -59,9 +76,9 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
                 { "params": { "keywords": searchTerm } }
       ).success(
         function(data,status,headers,config) { 
-          console.log(user_id);
+          console.log("the user is"+user_id+quantity[0]);
           var productssearch = data;
-          $scope.addListItem(productssearch[0].id, user_id, productssearch[0].price);
+          $scope.addListItem(productssearch[0].id, user_id, productssearch[0].price, quantity);
           $scope.loading = false;
 
       }).error(
@@ -69,21 +86,22 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
           $scope.loading = false;
           alert("There was a problem: " + status);
         });
+      $scope.operation= null;
       $scope.keywords= null;
-      $scope.change=$scope.pay_with-$scope.total;
       $scope.pay_with = null;
-      
     };
    
   
-  $scope.addListItem = function(product_id, user_id, product_price){
+  $scope.addListItem = function(product_id, user_id, product_price, quantity){
     
     console.log(angular.isDefined($scope.ticket[0]));
     console.log($scope.ticket.length);
-    var totalsale = product_price*1;
+    console.log(quantity);
+    var totalsale = product_price*quantity;
     if(angular.isDefined($scope.ticket[0])){
       var ticket_id = $scope.ticket[0].id;  
-      $scope.sales_attributes={ "product_id": product_id, "quantity" : '1', "totalsale" : totalsale };
+      $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale };
+      console.log("sales_attributes"+$scope.sales_attributes.to_s);
       Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
        $scope.findticket();
       }, function(error){
@@ -93,7 +111,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     else
     {
      $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-              sales_attributes: [{ "product_id": product_id, "quantity" : '1', "totalsale" : totalsale} ]}
+              sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale" : totalsale} ]}
         console.log($scope.ticket);
       Tickets.create({ticket: $scope.ticket}, function(){
         $scope.findticket();
