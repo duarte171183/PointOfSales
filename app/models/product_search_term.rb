@@ -5,7 +5,7 @@ class ProductSearchTerm
     search_term = search_term.downcase
     @where_clause = ""
     @where_args = {}
- 	build_for_barcode_search(search_term)
+ 	  build_for_barcode_search(search_term)
   end
 
 private

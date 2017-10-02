@@ -97,29 +97,32 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     console.log(angular.isDefined($scope.ticket[0]));
     console.log($scope.ticket.length);
     console.log(quantity);
-    var totalsale = product_price*quantity;
-    if(angular.isDefined($scope.ticket[0])){
-      var ticket_id = $scope.ticket[0].id;  
-      $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale };
-      console.log("sales_attributes"+$scope.sales_attributes.to_s);
-      Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
-       $scope.findticket();
-      }, function(error){
-         console.log(error)
-      });   
-     }
-    else
-    {
-     $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-              sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale" : totalsale} ]}
-        console.log($scope.ticket);
-      Tickets.create({ticket: $scope.ticket}, function(){
-        $scope.findticket();
-      }, function(error){
-         console.log(error)
-      });   
+    if(quantity>0 || quantity<0) {
+      var totalsale = product_price*quantity;
+      if(angular.isDefined($scope.ticket[0])){
+        var ticket_id = $scope.ticket[0].id;  
+        $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale };
+        console.log("sales_attributes"+$scope.sales_attributes.to_s);
+        Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
+         $scope.findticket();
+        }, function(error){
+           console.log(error)
+        });   
+       }
+      else
+      {
+       $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
+                sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale" : totalsale} ]}
+          console.log($scope.ticket);
+        Tickets.create({ticket: $scope.ticket}, function(){
+          $scope.findticket();
+        }, function(error){
+           console.log(error)
+        });   
+      }
+
     }
-   };
+  };
   
    $scope.deleteItemProduct = function(sale_id, ticket, ticket_id){
    
