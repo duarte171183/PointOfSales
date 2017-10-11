@@ -1,4 +1,5 @@
 <div ng-app="PointOfSales"> 
+
 <article ng-controller="ProductSearchController">
 	
 	<section class="search-form">
@@ -7,8 +8,12 @@
 					<h1 ng-model="operation" ng-change="search(keywords)">{{operation}}</h1>
 				</header>
 				<label for="keywords" class="sr-only">Keywords</label>
-				<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords, <%= current_user.id %>, ticket)" ng-model="keywords"   ng-model-options="{ debounce: 1000 }"/>
-		
+				<div class="input-group">
+					<input type="text" name="keywords" class="form-control input-lg" placeholder="Insert Barcode or Name Product" ng-change="search(keywords, <%= current_user.id %>, ticket)" ng-model="keywords"   ng-model-options="{ debounce: 1000 }"/>
+				    <span class="input-group-addon">
+					     <i class="glyphicon glyphicon-search"></i>
+					</span>
+				</div>
 		</form>
 	</section>
 	<!-- <div class="col-md-6">
@@ -73,11 +78,7 @@
 							     The total is greater than pay
 							</div>
 				         </div>
-				
-				         <div class="col-md-12">
-				            		<button class="pull-right btn btn-success btn-lg btn-block" ng-click=" pay()" ng-disabled="payForm.$invalid">Pay 
-									</button>
-				         </div>
+				         <button type="button" class="pull-right btn btn-success btn-lg btn-block" ng-click=pay() data-toggle="modal" data-target="#myModal" ng-disabled="payForm.$invalid">Pay</button>
 				  
 				     <br>
 				</form>
@@ -85,5 +86,25 @@
 	      </div>
 	</div>
 	</section>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h3>Ticket number {{ticket[0].id}}</h3>
+	      </div>
+	      <div class="modal-body"> <!--modal body -->
+	      	 <h1>Total: ${{ticket[0].total}}</h1>
+	      	 <h1>Pay With: ${{pay_with}}</h1>
+	      	 <h1>Change: ${{change}}</h1>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary" ng-click=confirm() data-dismiss="modal">Confirm Sale</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </article>
 </div>

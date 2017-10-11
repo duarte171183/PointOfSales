@@ -1,11 +1,13 @@
 
 <h1>Listing Tickets</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Id</th>
       <th>Total</th>
+      <th>Pay_with</th>
+      <th>change</th>
       <th>Status</th>
       <th colspan="3"></th>
     </tr>
@@ -16,6 +18,8 @@
       <tr>
         <td><%= ticket.id %></td>
         <td><%= ticket.total %></td>
+        <td><%= ticket.pay_with %></td>
+        <td><%= ticket.change %></td>
         <td><%= ticket.status %></td>
         <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
         <td><%= link_to 'show', ticket %></td>

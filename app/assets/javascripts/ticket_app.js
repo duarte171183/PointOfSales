@@ -95,14 +95,13 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   $scope.addListItem = function(product_id, user_id, product_price, quantity){
     
     console.log(angular.isDefined($scope.ticket[0]));
-    console.log($scope.ticket.length);
-    console.log(quantity);
+    console.log("The cantity is "+quantity);
     if(quantity>0 || quantity<0) {
       var totalsale = product_price*quantity;
-      if(angular.isDefined($scope.ticket[0])){
+     if(angular.isDefined($scope.ticket[0])){
         var ticket_id = $scope.ticket[0].id;  
-        $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale };
-        console.log("sales_attributes"+$scope.sales_attributes.to_s);
+        $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale, "subtotal": totalsale };
+        console.log("sales_attributes: "+$scope.sales_attributes.to_s);
         Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
          $scope.findticket();
         }, function(error){
@@ -111,8 +110,9 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
        }
       else
       {
-       $scope.ticket = {"subtotal": product_price, "total": product_price, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-                sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale" : totalsale} ]}
+       console.log("Total sale "+totalsale);
+       $scope.ticket = {"subtotal": totalsale, "total": totalsale, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
+                sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale": totalsale} ]}
           console.log($scope.ticket);
         Tickets.create({ticket: $scope.ticket}, function(){
           $scope.findticket();
@@ -134,14 +134,28 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   };
 
   $scope.pay =function(){
-    var ticket_id = $scope.ticket[0].id;
-    Ticket.update({id: ticket_id, status: 2 }, function(){
+    $scope.ticket_id = $scope.ticket[0].id;
+    $scope.change= $scope.pay_with- $scope.ticket[0].total ;
+    console.log("the change is"+$scope.change);
+    /*Ticket.update({id: $scope.ticket_id, status: 2, change: change, pay_with: $scope.pay_with }, function(){
      $scope.findticket();
     },function(error){
          console.log(error)
-      });   
+      });   */
   };
+
+  $scope.confirm = function(){
+     
+     Ticket.update({id: $scope.ticket_id, status: 2, change: $scope.change, pay_with: $scope.pay_with }, function(){
+     $scope.findticket();
+    },function(error){
+         console.log(error)
+      });
+  
+  };
+
 }]);
+
 
 app.directive('ensurePrime', function() {
 

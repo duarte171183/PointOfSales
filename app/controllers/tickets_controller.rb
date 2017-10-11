@@ -38,7 +38,7 @@ class TicketsController < ApplicationController
   def new
     @ticket = Ticket.new
     @ticket.sales.build
-  end
+ end
 
   # GET /tickets/1/edit
   def edit
@@ -54,8 +54,8 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
-      if @ticket.validate_and_save
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
+      if @ticket.save
+        format.html { redirect_to tickets_url, notice: 'Ticket was successfully created.' }
         format.json { render :show, status: :created, location: @ticket }
       else
         format.html { render :new  }
@@ -69,7 +69,7 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
+        format.html { redirect_to tickets_url, notice: 'Ticket was successfully updated.' }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit }

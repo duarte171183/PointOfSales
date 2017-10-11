@@ -1,2 +1,6 @@
-<h1>Editing User</h1>
+<div class="page-header">
+	<%= link_to 'Cancel', users_path, class: "btn btn-danger pull-right"%>
+	<h1>Edit: <%=@user.alias%></h1>
+
+</div>
 <%= render 'form' %>
