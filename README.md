@@ -22,7 +22,11 @@ System dependencies
 
 Configuration
 
+Postgressql
+
 Database creation
+
+rake db:setup
 
 Database initialization
 
