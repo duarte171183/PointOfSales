@@ -26,7 +26,7 @@ class TicketPdf < Prawn::Document
 
 	def line_item_rows
 		[["Product", "Qty", "Total"]]+
-		@ticket.sales.map do |item|
+		@ticket.LineItems.map do |item|
 			[item.product.name, item.quantity, price(item.totalsale)]
 		end
 	end
@@ -48,7 +48,5 @@ class TicketPdf < Prawn::Document
 		text "thanks for your purchase"
 	end
 
-	def change_words
-		number_to_currency_in_words( @ticket.change )
-	end
+
 end

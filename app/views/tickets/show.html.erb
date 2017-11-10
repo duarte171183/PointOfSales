@@ -9,7 +9,7 @@
   </thead>
 
   <tbody>
-    <% @ticket.sales.each do |sale| %>
+    <% @ticket.LineItems.each do |sale| %>
       <tr>
         <td><%= sale.product.name %></td>
         <td><%= sale.quantity %></td>

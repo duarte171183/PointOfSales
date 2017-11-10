@@ -1,4 +1,4 @@
-<div ng-app="PointOfSales"> 
+<div ng-app="PointOfSales" 
 
 <article ng-controller="ProductSearchController">
 	
@@ -40,20 +40,20 @@
 	<div class="col-md-7">
 				<h1 class="h3">List Products</h1>
 				<div ng-repeat="t in ticket">
-					<div ng-repeat="s in t.sales"">
+					<div ng-repeat= "i in t.LineItems">	
 							<li class="list-group-item clearfix">
-								<div class="col-md-5">
-									<img ng-src={{s.product.photo.thumb.url}} class="img-rounded" />	
+								<div class="col-md-5 hidden-xs">
+									<img ng-src={{i.product.photo.thumb.url}} class="img-rounded" />	
 								</div>
 								<div class="col-md-7">
-									 <h2>{{s.product.name}} </h2>
-									<h2>{{s.quantity}} x ${{s.product.price}} = ${{s.totalsale}}</h2>
+									 <h2>{{i.product.name}} </h2>
+									<h2>{{i.quantity}} x ${{i.product.price}} = ${{i.totalsale}}</h2>
 								</div>
-								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(s.id, ticket, t.id)">Delete All
+								<button class="pull-right btn btn-danger" ng-click=" deleteItemProduct(i.id, ticket, t.id)">Delete All
 								    </button>	
 							</li>
 						<br>
-					 </div>
+					</div>
 				</div>
 		
 	</div>

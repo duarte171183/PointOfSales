@@ -1,17 +1,23 @@
 Rails.application.routes.draw do
 
+  resources :suppliers
   resources :companies
+  
+  resources :orders do
+    resources :order_items
+  end
+  
   devise_for :users
   scope "/admin" do
     resources :users
   end
    
   
-
+  resources :roles
   resources :users
  
   resources :tickets do
-    resources :sales, only: [:create, :destroy]
+    resources :line_items, only: [:create, :destroy]
     collection  do
       get :findopenticket
     end

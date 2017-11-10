@@ -1,0 +1,19 @@
+  
+  <div class="form-group">
+      <%= f.label :product %>
+      <%= f.collection_select(:product_id, Product.all, :id, :name_with_initial,  {prompt: true}, {:class=>'form-control'})%>  
+    </div>
+     
+  <div class="form-inline">
+    
+    <div class="form-group">
+      <%= f.label :quantity %>
+      <%= f.number_field :quantity, class: 'form-control', step: :any %>
+      <%= f.label :purchaseprice %>
+      <%= f.number_field :purchaseprice, class: 'form-control', step: :any %>
+    </div>  
+    <div class="form-group">
+       <%= f.link_to_remove "Remove this Product", class: 'btn btn-primary' %>
+    </div>
+</div>
+  

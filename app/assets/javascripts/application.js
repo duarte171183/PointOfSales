@@ -23,5 +23,6 @@
 //= require ng-rails-csrf
 //= require bootstrap-filestyle
 //= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
+//= require jquery_nested_form
 
 

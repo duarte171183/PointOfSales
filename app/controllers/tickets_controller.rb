@@ -37,7 +37,7 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
-    @ticket.sales.build
+    @ticket.LineItems.build
  end
 
   # GET /tickets/1/edit
@@ -69,6 +69,7 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update(ticket_params)
+         @ticket.discount_from_stock
         format.html { redirect_to tickets_url, notice: 'Ticket was successfully updated.' }
         format.json { render :show, status: :ok, location: @ticket }
       else
@@ -76,6 +77,7 @@ class TicketsController < ApplicationController
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /tickets/1
@@ -102,7 +104,7 @@ class TicketsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
       params.require(:ticket).permit(:subtotal, :total, :pay_with, :change, :status, :user_id,
-                                      :sales_attributes => [:id, :product_id, :quantity, :totalsale,  :_destroy])
+                                      :LineItems_attributes => [:id, :product_id, :quantity, :totalsale,  :_destroy])
     end
 
 end

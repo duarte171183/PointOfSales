@@ -17,13 +17,13 @@ app.factory('Ticket', ['$resource', function($resource){
 }]);
 
 app.factory('Sales_Tickets', ['$resource', function($resource){
-  return $resource('/tickets/:ticket_id/sales/:id.json', {}, {
+  return $resource('/tickets/:ticket_id/line_items/:id.json', {}, {
     delete: { method: 'DELETE', params: {ticket: '@ticket_id', id: '@id'} }
   });
 }]);
 
 app.factory('Sales_Ticket', ['$resource',function($resource){
-  return $resource('/tickets/:ticket_id/sales', {}, {
+  return $resource('/tickets/:ticket_id/line_items', {}, {
     create: { method: 'POST', params:{ticket_id: '@ticket_id'} }
   })
 }]);
@@ -99,10 +99,11 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
     if(quantity>0 || quantity<0) {
       var totalsale = product_price*quantity;
      if(angular.isDefined($scope.ticket[0])){
+        console.log("Sales_Ticket");
         var ticket_id = $scope.ticket[0].id;  
-        $scope.sales_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale, "subtotal": totalsale };
-        console.log("sales_attributes: "+$scope.sales_attributes.to_s);
-        Sales_Ticket.create({ticket_id: ticket_id, sale: $scope.sales_attributes }, function(){
+        $scope.LineItems_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale, "subtotal": totalsale };
+        console.log("lineitems_attributes: "+$scope.lineitems_attributes);
+        Sales_Ticket.create({ticket_id: ticket_id, lineitem: $scope.LineItems_attributes }, function(){
          $scope.findticket();
         }, function(error){
            console.log(error)
@@ -112,7 +113,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
       {
        console.log("Total sale "+totalsale);
        $scope.ticket = {"subtotal": totalsale, "total": totalsale, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
-                sales_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale": totalsale} ]}
+                LineItems_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale": totalsale} ]}
           console.log($scope.ticket);
         Tickets.create({ticket: $scope.ticket}, function(){
           $scope.findticket();

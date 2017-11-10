@@ -1,0 +1,41 @@
+<%= nested_form_for @order, :html => {:class => "panel-footer"}  do |f| %>
+ <fieldset>
+  <% if @order.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <% @order.errors.full_messages.each do |message| %>
+        <span class="glyphicon glyphicon-exclamation-sign"></span><%= message %></br>
+      <% end %>
+      
+    </div>
+  <% end %>
+  <div class="form-group">
+  	<%= f.label :supplier %>
+    <%= f.collection_select(:supplier_id, Supplier.all, :id, :name, { prompt: true}, {:class => 'form-control'})%>
+    
+  </div>
+    <div class="form-group">
+      <%= f.link_to_add "Add a product to order", :OrderItems, :data=> {:target => "#panelOrder"}, class: 'btn btn-success' %>
+    </div>
+  <div class="panel panel-danger">
+  <div class="panel-heading">Products</div>
+  <div id="panelOrder" class="panel-body">
+  <%= f.fields_for :OrderItems, OrderItem.new do |builder| %>
+    <%= render "order_items_fields", :f => builder %>
+    <br>
+  <% end %> 
+  
+ </div>
+</div>
+<div class="form-inline">
+  <div class="form-group">
+    <%= f.label :total %>
+    <%= f.number_field :totalorder, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.submit class: "btn btn-success"%>
+  </div>
+  </div>
+ </fieldset> 
+<% end %>

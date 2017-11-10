@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 
 
-module PointOfSales
+module RoRPosWeb
   class Application < Rails::Application
 
    

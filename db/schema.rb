@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726040721) do
+ActiveRecord::Schema.define(version: 20171030033731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,42 @@ ActiveRecord::Schema.define(version: 20170726040721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "ticket_id"
+    t.decimal  "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal  "totalsale"
+  end
+
+  add_index "line_items", ["product_id"], name: "index_line_items_on_product_id", using: :btree
+  add_index "line_items", ["ticket_id"], name: "index_line_items_on_ticket_id", using: :btree
+
+  create_table "order_items", force: :cascade do |t|
+    t.decimal  "quantity"
+    t.decimal  "purchaseprice"
+    t.decimal  "subtotal"
+    t.integer  "product_id"
+    t.integer  "order_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+  add_index "order_items", ["product_id"], name: "index_order_items_on_product_id", using: :btree
+
+  create_table "orders", force: :cascade do |t|
+    t.decimal  "totalorder"
+    t.integer  "user_id"
+    t.integer  "supplier_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "orders", ["supplier_id"], name: "index_orders_on_supplier_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -50,17 +86,16 @@ ActiveRecord::Schema.define(version: 20170726040721) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
-  create_table "sales", force: :cascade do |t|
-    t.integer  "product_id"
-    t.integer  "ticket_id"
-    t.decimal  "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.decimal  "totalsale"
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "rfc"
+    t.integer  "phone_number"
+    t.string   "email"
+    t.string   "address"
+    t.integer  "postal_code"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
-
-  add_index "sales", ["product_id"], name: "index_sales_on_product_id", using: :btree
-  add_index "sales", ["ticket_id"], name: "index_sales_on_ticket_id", using: :btree
 
   create_table "tickets", force: :cascade do |t|
     t.decimal  "subtotal",   precision: 10, scale: 2
@@ -98,6 +133,10 @@ ActiveRecord::Schema.define(version: 20170726040721) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
-  add_foreign_key "sales", "products"
-  add_foreign_key "sales", "tickets"
+  add_foreign_key "line_items", "products"
+  add_foreign_key "line_items", "tickets"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "suppliers"
+  add_foreign_key "orders", "users"
 end

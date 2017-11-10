@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 9.99
+  purchaseprice: 9.99
+  subtotal: 9.99
+  user: 
+  product: 
+  order: 
+
+two:
+  quantity: 9.99
+  purchaseprice: 9.99
+  subtotal: 9.99
+  user: 
+  product: 
+  order: 

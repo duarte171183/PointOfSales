@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+
+  
+ 
+<table>
+  <thead>
+    <tr>
+      <th>product</th>
+      <th>quantity</th>
+      <th>purchaseprice</th>
+      <th>subtotal</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order.OrderItems.each do |oi| %>
+      <tr>
+        <td><%= oi.product.name %></td>
+        <td><%= oi.quantity %></td>
+        <td><%= oi.purchaseprice %></td>
+        <td><%= oi.subtotal %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<strong>Total Order:</strong>
+  <%= @order.totalorder %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>
