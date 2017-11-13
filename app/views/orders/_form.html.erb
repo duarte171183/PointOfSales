@@ -1,4 +1,4 @@
-<%= nested_form_for @order, :html => {:class => "panel-footer"}  do |f| %>
+<%= nested_form_for @order, :html => {:class => "form"}  do |f| %>
  <fieldset>
   <% if @order.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
@@ -13,12 +13,11 @@
   <div class="form-group">
   	<%= f.label :supplier %>
     <%= f.collection_select(:supplier_id, Supplier.all, :id, :name, { prompt: true}, {:class => 'form-control'})%>
-    
   </div>
     <div class="form-group">
       <%= f.link_to_add "Add a product to order", :OrderItems, :data=> {:target => "#panelOrder"}, class: 'btn btn-success' %>
     </div>
-  <div class="panel panel-danger">
+  <div class="panel panel-warning">
   <div class="panel-heading">Products</div>
   <div id="panelOrder" class="panel-body">
   <%= f.fields_for :OrderItems, OrderItem.new do |builder| %>

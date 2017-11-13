@@ -13,7 +13,7 @@ class Product < ActiveRecord::Base
 	before_save :titleize_name
 
 	def name_with_initial
-   	 "Barcode:#{bar_code} Name: #{name} -- Stock: #{stock}"
+   	 "#{bar_code} Name: #{name} -- Stock: #{stock}"
     end
 
 	def titleize_name

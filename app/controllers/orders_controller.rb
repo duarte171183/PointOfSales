@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
 	    @order.user_id = current_user.id if current_user
 	    respond_to do |format|
 	      if @order.validate_and_addstock
-	        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+	        format.html { redirect_to order_order_item(@order), notice: 'Order was successfully created.' }
 	        format.json { render :show, status: :created, location: @order }
 	      else
 	        format.html { render :new }

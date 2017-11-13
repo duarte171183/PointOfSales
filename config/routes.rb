@@ -8,13 +8,14 @@ Rails.application.routes.draw do
   end
   
   devise_for :users
-  scope "/admin" do
-    resources :users
+    scope "/admin" do
+      resources :users
+      resources :roles
   end
-   
   
-  resources :roles
-  resources :users
+  authenticated :user do
+    root :to =>'dashboard#index', as: :authenticated_root
+  end   
  
   resources :tickets do
     resources :line_items, only: [:create, :destroy]
@@ -22,7 +23,8 @@ Rails.application.routes.draw do
       get :findopenticket
     end
   end
-  root 'welcome#index'
+  
+  root :to => 'welcome#index'
   
   resources :products do
     collection do

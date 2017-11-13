@@ -24,5 +24,12 @@
 //= require bootstrap-filestyle
 //= require bootstrap-sass-official/assets/javascripts/bootstrap-sprockets
 //= require jquery_nested_form
+//= require select2
+//= require select2-full
 
-
+$(document).ready(function() {
+  $('#order_supplier_id').select2({
+  	 theme: "bootstrap",
+  	placeholder: "Select a Supplier"
+  });
+});

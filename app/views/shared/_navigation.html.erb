@@ -13,24 +13,24 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-right">
+        
       <% if user_signed_in? %>
           <li>
                <%= link_to root_path do%>
                 <span class= "glyphicon glyphicon-home">
                 </span>   
-                Home
                <%end%>
           </li>
           <li>
             <%= link_to new_ticket_path do %>
-             <span class="glyphicon glyphicon-list-alt">
+             <span class="glyphicon glyphicon-barcode">
              </span>
-             Sale
             <% end %>
          <li class="dropdown ">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              Store
+               <span class="glyphicon glyphicon-list-alt">
+             </span>
             <span class="caret "></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -40,24 +40,11 @@
             </ul>
           </li>
          </li>
-        <% if current_user.has_role? :admin %>
-          <li>
-            <%= link_to users_path  do%>
-            <span class="glyphicon glyphicon-user">
-             </span>
-             Users
-            <% end %>
-          </li>
-        <% end %>
-       <% end %>
-      </ul>
-      
-      
-      <ul class="nav navbar-nav navbar-right">
-         <% if user_signed_in? %>
+        
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-               <%= current_user.alias %>
+              <span class="glyphicon glyphicon-user">
+             </span>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -65,6 +52,18 @@
               <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
             </ul>
           </li>
+          <% if current_user.has_role? :admin %>
+            <li>
+              <%= link_to users_path  do%>
+              <span class="glyphicon glyphicon-cog">
+               </span>
+              <% end %>
+            </li>
+          <% end %>
+          <% else %>
+        <li>
+          <%=link_to 'Sign in' ,new_user_session_path %>
+        </li>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
