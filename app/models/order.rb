@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
 
 	 def validate_and_addstock
 	 	ActiveRecord::Base.transaction do
-		 	self.save
+	 		self.save
 		 	self.products.each do |p|
 			 	self.OrderItems .each do |o| 
 			 		o.subtotal= o.quantity * o.purchaseprice
@@ -26,6 +26,7 @@ class Order < ActiveRecord::Base
 				errors.add(:order, "the total of order is not equal to sum of subtotal items" )  	
 				raise ActiveRecord::Rollback
 			end	
+			
 		 end
 	 end
 end

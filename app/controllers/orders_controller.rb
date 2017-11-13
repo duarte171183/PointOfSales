@@ -2,12 +2,12 @@ class OrdersController < ApplicationController
 	before_action :set_order, only: [:show, :edit, :update, :destroy]
 	
 	def index
-		@orders= Order.all
+		@orders= Order.all.paginate(:page => params[:page], :per_page => 10)
 	end
 
 	def new
 		@order= Order.new
-		@order.OrderItems.build
+
 	end
 
 	def show
@@ -18,12 +18,13 @@ class OrdersController < ApplicationController
 	    @order = Order.new(order_params)
 	    @order.user_id = current_user.id if current_user
 	    respond_to do |format|
-	      if @order.validate_and_addstock
-	        format.html { redirect_to order_order_item(@order), notice: 'Order was successfully created.' }
+	      if @order.save
+	        format.html { redirect_to @order, notice: 'Order was successfully created.' }
 	        format.json { render :show, status: :created, location: @order }
+	        @order.validate_and_addstock
 	      else
 	        format.html { render :new }
-	        format.json { render json: @order.errors, status: :unprocessable_entity }
+	        format.json { render json: @order, status: :unprocessable_entity }
 	      end
 	    end
  	 end
