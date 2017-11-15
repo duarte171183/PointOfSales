@@ -18,10 +18,9 @@ class OrdersController < ApplicationController
 	    @order = Order.new(order_params)
 	    @order.user_id = current_user.id if current_user
 	    respond_to do |format|
-	      if @order.save
+	      if   @order.validate_and_addstock
 	        format.html { redirect_to @order, notice: 'Order was successfully created.' }
 	        format.json { render :show, status: :created, location: @order }
-	        @order.validate_and_addstock
 	      else
 	        format.html { render :new }
 	        format.json { render json: @order, status: :unprocessable_entity }
