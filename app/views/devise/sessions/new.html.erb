@@ -1,16 +1,18 @@
 <h2 >Log in</h2>
 
 <div class="row">
-<div class="col-md-6 col-md-offset-3 panel-footer">
+<div class="col-md-6 col-md-offset-3 well">
+  <img src="/images/logo.png" class=" img-responsive center-block height="200" width="200" ">
+  <br>
   <section class="login-form">
    <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f| %>
      <div class="input-group">
-      <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+      <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-user text-primary" aria-hidden="true"></span></span>
       <%= f.text_field :alias, autofocus: true, requiered: true, class: 'form-control  input-lg', placeholder: "Alias" %>
      </div>
      <br>
-     <div class="input-group">
-        <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+     <div class="input-group ">
+        <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-lock text-primary" aria-hidden="true"></span></span>
        <%= f.password_field :password, autocomplete: "off", class: 'form-control  input-lg', placeholder: "Password" %>
     </div>
     <br>
