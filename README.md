@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 # RoRPosWeb
-=======
+
 # PointOfSales
 README
 
@@ -41,7 +41,3 @@ Services (job queues, cache servers, search engines, etc.)
 
 Deployment instructions
 
-…
-
-Please feel free to use a different markup language if you do not plan to run rake doc:app.
->>>>>>> c72caac86cb8c6d720682df0d46bbdfee89f53a6
