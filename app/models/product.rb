@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
 	validates_uniqueness_of :bar_code
 	
 	before_save :titleize_name
-
+	
 	def name_with_initial
    	 "#{bar_code} Name: #{name} -- Stock: #{stock}"
     end

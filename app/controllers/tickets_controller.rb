@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all.order(:id)
+    @tickets = Ticket.all.map(&:id)
   end
 
   

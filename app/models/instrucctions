@@ -1,0 +1,72 @@
+Hola Omar,
+
+Espero que estés muy bien.
+
+Como lo mencione, ocupamos hacerte una prueba técnica para evaluar tus
+capacidades. En una primera parte de la prueba ocupamos que en base a
+unos specs definidos se desarrolle un diagrama de clases. Podemos resolver
+cualquier duda que se presente. No dudes en buscarnos :)
+
+Esta primera etapa de la prueba la puedes entregar el lunes 31 de
+Julio a las 18hrs.
+
+---
+
+Feature
+
+Crear un módulo que permita personalizar las comisiones de método de
+pago por usuario y por evento, para el cálculo de los totales de una
+reservación con X cantidad de boletos.
+
+
+Criterios de Aceptación
+
+Dado que se tienen comisiones por default por método de pago, Cuando
+se tiene 1 boleto X con valor 500, Entonces calcular el costo final de
+la reservación.
+
+Dado que se tienen comisiones por default por método de pago,
+Cuando se tiene un boleto X con valor 500,
+Y se quieren personalizar las comisiones por usuario,
+Entonces calcular el costo final de la reservación en base a las
+nuevas comisiones por usuario.
+
+Dado que se tienen comisiones por default por método de pago,
+Cuando se tiene un boleto X con valor 500,
+Y se quieren personalizar las comisiones por evento,
+Entonces calcular el costo final de la reservación en base a las
+nuevas comisiones por evento.
+
+Dado que se tienen comisiones por usuario
+Crear en base a éstas, comisiones por evento,
+Entonces calcular el costo final de la reservación en base a las
+nuevas comisiones por evento.
+
+Dado que un usuario crea una reservación,
+Cuando selecciona un método de pago,
+Entonces calcular el costo final de la reservación, considerando la
+comisiones ya sea por evento o por usuario.
+
+Prueba técnica 1:
+
+En general:
+Creación de un módulo escalable y dinámico para creación de comisiones
+para múltiples métodos de pago por usuario o por evento.
+
+¿Qué se busca?
+Un diagrama de clases que resuelva el problema:
+
+1. ¿Qué objetos necesito para resolverlo? ¿cuáles son las
+responsabilidades de cada objeto?
+
+2. La parte que más va a cambiar de este código es probablemente la
+que nos permite agregar comisiones personalizadas de los método de
+pago por evento o por usuario. Qué diseño y qué objetos debemos tener
+para que esto sea fácil.
+
+3. Al final debe ser un módulo/paquete independiente, es decir que si
+yo quisiera darle portabilidad a esta solución la pueda incluir como
+una gema, librería, paquete sin tener que re-programarla desde cero.
+
+NOTA: El diseño debe considerar que el modulo sera usado en
+servicios independientes.

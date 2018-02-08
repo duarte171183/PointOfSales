@@ -13,7 +13,7 @@
 
 <div class="row">
  	<% if notice.present? %>
-		<aside class="alert alert-warning  data-dismiss="alert" aria-label="Close"">
+		<aside class="alert alert-warning  data-dismiss="alert" aria-label="Close">
 			<%= notice %>
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
   				<span aria-hidden="true">&times;</span>
@@ -22,9 +22,12 @@
 	<% end %>
 
 	<% if alert.present? %>
-			<aside class="alert alert-error">
+		<aside class="alert alert-danger"  data-dismiss="alert" aria-label="Close">
 				<%= alert %>
-			</aside>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  				<span aria-hidden="true">&times;</span>
+			</button>
+		</aside>
 	<% end %>
 </div>
 <div class="container">

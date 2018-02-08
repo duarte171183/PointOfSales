@@ -1,5 +1,4 @@
 class RolesController < ApplicationController
-  before_filter :authenticate_user!
   before_filter :admin_only
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 

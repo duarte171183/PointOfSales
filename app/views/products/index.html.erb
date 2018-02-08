@@ -2,32 +2,31 @@
   <%= link_to 'New Product', new_product_path, class: "btn btn-primary pull-right" %>
   <h1>Listing Products</h1>
 </div>
+
+<section class="search-form">
+  ​<%= form_for :products, method: :get  do |f| %>
+    <div class="input-group input-group-lg">
+      <%= label_tag :keywords, nil, class: "sr-only" %>
+      <%= text_field_tag :keywords, nil, placeholder: "barcode or name", class: "form-control input-lg" %>
+      <span class="input-group input-group-btn">
+        <%= submit_tag "Search Product", class: "btn btn-primary" %>  
+        <%= link_to 'Clear filter', products_path, class: "btn btn-danger" %>
+      </span>
+    </div>
+  <% end %>
+</section> 
+
+<br>
+<br>
+<section class="search-result">
 <div class="row">
   <% @products.each do |product| %>
-      <div class="col-md-3">
-          <%= link_to edit_product_path(product), :class=>"thumbnail" do %>
-               <%=image_tag product.photo.url :thumb, :size => '260x180' %>
-            <%end%>
-               <h2 class="h3">
-                 <%= product.bar_code %>
-               </h2>
-             
-               <h2 class="h3">
-                 <%= product.name %>
-               </h2>
-               <h2 class="h3">
-                <small> Price:</small>
-                 <%= number_to_currency( product.price) %>
-               </h2>
-              <h2 class="h3">
-                <small>Stock:</small>
-                <%= product.stock %> 
-              </h2>
-        </div>
+     <%= render partial: "products", locals: { product: product } %>
 <% end %>
+
 
 <div class="col-xs-12 pagination text-center">
   <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
 </div>
-
 </div>
+</section>

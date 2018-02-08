@@ -18,12 +18,13 @@ class Order < ActiveRecord::Base
 			 	self.OrderItems .each do |o| 
 			 		o.subtotal= o.quantity * o.purchaseprice
 			 		o.save
-			 		p.stock == 0 ? p.stock+=o.quantity : p.stock= o.quantity 
+			 		p.stock+=o.quantity
 			 		p.save
 			 	end
+	
 			end 
 			if self.totalorder!=self.OrderItems.sum(:subtotal)
-				errors.add(:order, "the total of order is not equal to sum of subtotal items" )  	
+				errors.add(:order, "the total this order is not equal to sum of subtotal of the items" )  	
 				raise ActiveRecord::Rollback
 			end	
 			self.save

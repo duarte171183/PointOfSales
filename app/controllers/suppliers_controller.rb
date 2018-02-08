@@ -1,4 +1,5 @@
 class SuppliersController < ApplicationController
+  
   before_action :set_supplier, only: [:show, :edit, :update, :destroy]
 
   # GET /suppliers

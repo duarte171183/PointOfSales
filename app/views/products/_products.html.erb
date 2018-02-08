@@ -1,0 +1,20 @@
+  <div class="col-sm-3" >
+          <%= link_to edit_product_path(product), :class=>"thumbnail" do %>
+               <%=image_tag product.photo.url :thumb, :size => '260x180' %>
+            <%end%>
+               <h2 class="h3">
+                 <%= product.bar_code %>
+               </h2>
+             
+               <h2 class="h3">
+                 <%= product.name %>
+               </h2>
+               <h2 class="h3">
+                <small> Price:</small>
+                 <%= number_to_currency( product.price) %>
+               </h2>
+              <h2 class="h3">
+                <small>Stock:</small>
+                <%= product.stock %> 
+              </h2>
+        </div>

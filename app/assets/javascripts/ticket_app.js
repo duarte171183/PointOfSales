@@ -94,15 +94,15 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   
   $scope.addListItem = function(product_id, user_id, product_price, quantity){
     
-    console.log(angular.isDefined($scope.ticket[0]));
-    console.log("The cantity is "+quantity);
+    //console.log(angular.isDefined($scope.ticket[0]));
+    //console.log("The cantity is "+quantity);
     if(quantity>0 || quantity<0) {
       var totalsale = product_price*quantity;
      if(angular.isDefined($scope.ticket[0])){
-        console.log("Sales_Ticket");
+      //  console.log("Sales_Ticket");
         var ticket_id = $scope.ticket[0].id;  
         $scope.LineItems_attributes={ "product_id": product_id, "quantity": quantity, "totalsale": totalsale, "subtotal": totalsale };
-        console.log("lineitems_attributes: "+$scope.lineitems_attributes);
+        //console.log("lineitems_attributes: "+$scope.lineitems_attributes);
         Sales_Ticket.create({ticket_id: ticket_id, lineitem: $scope.LineItems_attributes }, function(){
          $scope.findticket();
         }, function(error){
@@ -111,10 +111,10 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
        }
       else
       {
-       console.log("Total sale "+totalsale);
+       //console.log("Total sale "+totalsale);
        $scope.ticket = {"subtotal": totalsale, "total": totalsale, "pay_with": 0, "change": 0, "status":1, "user_id" : user_id,  
                 LineItems_attributes: [{ "product_id": product_id, "quantity": quantity, "totalsale": totalsale} ]}
-          console.log($scope.ticket);
+         // console.log($scope.ticket);
         Tickets.create({ticket: $scope.ticket}, function(){
           $scope.findticket();
         }, function(error){
@@ -137,7 +137,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   $scope.pay =function(){
     $scope.ticket_id = $scope.ticket[0].id;
     $scope.change= $scope.pay_with- $scope.ticket[0].total ;
-    console.log("the change is"+$scope.change);
+    //console.log("the change is"+$scope.change);
     /*Ticket.update({id: $scope.ticket_id, status: 2, change: change, pay_with: $scope.pay_with }, function(){
      $scope.findticket();
     },function(error){
@@ -148,7 +148,7 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   $scope.confirm = function(){
      
      Ticket.update({id: $scope.ticket_id, status: 2, change: $scope.change, pay_with: $scope.pay_with }, function(){
-     $scope.findticket();
+      $scope.findticket();
     },function(error){
          console.log(error)
       });

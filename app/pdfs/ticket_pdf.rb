@@ -1,6 +1,7 @@
+require 'currency-in-words'
 class TicketPdf < Prawn::Document
 	def initialize(ticket, view)
-		super(top_margin: 70, :page_size => 'A6')
+		super(top_margin: 20,  :page_size => 'A6')
 		@ticket = ticket
 		@view = view
 		ticket_number
@@ -8,6 +9,7 @@ class TicketPdf < Prawn::Document
 		line_items
 		total_price
 		leyend
+		#start_new_page 
 	end
 
 	def date_shopping
@@ -32,20 +34,23 @@ class TicketPdf < Prawn::Document
 	end
 
 	def price(num)
+		
 		@view.number_to_currency(num)
+	end
+	def price_to_word(num)
+		@view.number_to_currency_in_words(num)
 	end
 
 	def total_price
 		move_down 15
-		text "Total: #{price(@ticket.total)}", size: 10, style: :bold
-		text "Pay With: #{price(@ticket.pay_with)}", size: 10, style: :bold
-		text "Change: #{price(@ticket.change)}", size: 10, style: :bold
-		
+		text "Total: #{price(@ticket.total)}, #{price_to_word(@ticket.total)}", size: 10, style: :bold
+		text "Pay With: #{price(@ticket.pay_with)}, #{price_to_word(@ticket.pay_with)}", size: 10, style: :bold
+		text "Change: #{price(@ticket.change)}, #{price_to_word(@ticket.change)}", size: 10, style: :bold
 	end
 
 	def leyend
 		move_down 15
-		text "thanks for your purchase"
+		text "Thanks for your purchase"
 	end
 
 

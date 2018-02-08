@@ -8,6 +8,7 @@
 /.bundle
 
 # Ignore all logfiles and tempfiles.
+/secrets.yml
 doc/
 *.swp
 *~
@@ -16,6 +17,7 @@ doc/
 *.png
 .project
 .DS_Store
+public/uploads/product/photo/*
 /log/*
 !/log/.keep
 /tmp

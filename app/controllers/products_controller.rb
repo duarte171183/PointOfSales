@@ -4,7 +4,17 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all.order(:name).paginate(:page => params[:page], :per_page => 10)
+    @page = (params[:page] || 0).to_i
+
+    if params[:keywords].present?
+      @keywords = params[:keywords]
+      product_search_term = ProductSearchTerm.new(@keywords)
+      @products = Product.where(product_search_term.where_clause, product_search_term.where_args).paginate(:page => params[:page], :per_page => 10)
+
+    else
+      @products = Product.all.order(:name).paginate(:page => params[:page], :per_page => 10)
+    end
+    
   end
 
   # GET /products/1
@@ -32,7 +42,7 @@ class ProductsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html {}
+      format.html {render products}
       format.json { render json: @product}
     end
   end
