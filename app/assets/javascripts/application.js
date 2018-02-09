@@ -18,7 +18,7 @@
 //= require angular-route/angular-route
 //= require angular-rails-templates
 //= require angular-resource
-//= require turbolinks
+
 //= require_tree .
 //= require ng-rails-csrf
 //= require bootstrap-filestyle

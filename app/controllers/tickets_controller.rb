@@ -24,7 +24,6 @@ class TicketsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json
       format.pdf do 
         pdf = TicketPdf.new(@ticket, view_context)
         send_data pdf.render, filename: "ticket_#{@ticket.id}.pdf",
@@ -56,7 +55,6 @@ class TicketsController < ApplicationController
     respond_to do |format|
       if @ticket.save
         format.html { redirect_to tickets_url, notice: 'Ticket was successfully created.' }
-        format.json { render :show, status: :created, location: @ticket }
       else
         format.html { render :new  }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
@@ -71,7 +69,6 @@ class TicketsController < ApplicationController
       if @ticket.update(ticket_params)
          @ticket.discount_from_stock
         format.html { redirect_to tickets_url, notice: 'Ticket was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
