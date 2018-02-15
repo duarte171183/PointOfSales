@@ -43,7 +43,8 @@ gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
-
+gem "figaro"
+gem "fog-aws"
 #use pdf report
 gem 'prawn', '~> 2.1'
 gem 'prawn-table', '~> 0.2.2'

@@ -21,3 +21,4 @@ public/uploads/product/photo/*
 /log/*
 !/log/.keep
 /tmp
+/config/application.yml
