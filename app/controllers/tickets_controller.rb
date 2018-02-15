@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    @tickets = Ticket.order_desc.paginate(:page => params[:page], :per_page => 10)
   end
 
   
@@ -55,6 +55,7 @@ class TicketsController < ApplicationController
     respond_to do |format|
       if @ticket.save
         format.html { redirect_to tickets_url, notice: 'Ticket was successfully created.' }
+        format.json { render json: @ticket}
       else
         format.html { render :new  }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }
@@ -69,6 +70,8 @@ class TicketsController < ApplicationController
       if @ticket.update(ticket_params)
          @ticket.discount_from_stock
         format.html { redirect_to tickets_url, notice: 'Ticket was successfully updated.' }
+        format.json { render json:  @ticket}
+
       else
         format.html { render :edit }
         format.json { render json: @ticket.errors, status: :unprocessable_entity }

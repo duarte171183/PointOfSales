@@ -31,16 +31,17 @@ class LineItemsController < ApplicationController
        @line_item_first=@ticket.LineItems.where(product_id: lineitem_params[:product_id]).first  
        @line_item_first.update(quantity: lineitem_params[:quantity].to_d+@line_item_first.quantity, totalsale: (lineitem_params[:totalsale].to_d+@line_item_first.totalsale < 0 ? lineitem_params[:totalsale]=@line_item_first.totalsale : lineitem_params[:totalsale].to_d+@line_item_first.totalsale  ))
        @line_item_first.destroy if @line_item_first.quantity<=0
+       respond_to do |format|
+        format.json {head :no_content}
+      end
     else
        @line_item = @ticket.LineItems.create(lineitem_params)  
     end  
     
     respond_to do |format|
      if @ticket.update_columns(total: @ticket.total+lineitem_params[:totalsale] < 0 ?  0 : @ticket.total+lineitem_params[:totalsale])
-         format.html { redirect_to tickets_url, notice: 'Product is add' }
          format.json { head :no_content }
       else
-         format.html { redirect_to tickets_url, notice: 'Error in sale' }
          format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end
     end

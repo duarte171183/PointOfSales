@@ -5,17 +5,16 @@
 
 <section class="search-form">
   ​<%= form_for :products, method: :get  do |f| %>
-    <div class="input-group input-group-lg">
+    <div class="input-group">
       <%= label_tag :keywords, nil, class: "sr-only" %>
-      <%= text_field_tag :keywords, nil, placeholder: "barcode or name", class: "form-control input-lg" %>
-      <span class="input-group input-group-btn">
-        <%= submit_tag "Search Product", class: "btn btn-primary" %>  
-        <%= link_to 'Clear filter', products_path, class: "btn btn-danger" %>
-      </span>
+      <%= text_field_tag :keywords, nil, placeholder: "insert barcode or name", class: "form-control" %>
+      <div class="input-group-btn">
+         <%= submit_tag "Search Product", class: "btn btn-primary" %>  
+         <%= link_to 'Clear filter', products_path, class: "btn btn-danger" %>  
+      </div>
     </div>
   <% end %>
 </section> 
-
 <br>
 <br>
 <section class="search-result">
