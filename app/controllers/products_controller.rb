@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  
+  
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   
   # GET /products
@@ -40,7 +42,6 @@ class ProductsController < ApplicationController
     else
       @product = []
     end
-    
     respond_to do |format|
       format.html {render products}
       format.json { render json: @product}
