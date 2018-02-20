@@ -18,7 +18,7 @@ class Order < ActiveRecord::Base
 			 	self.OrderItems .each do |o| 
 			 		o.subtotal= o.quantity * o.purchaseprice
 			 		o.save
-			 		p.stock+=o.quantity
+			 		p.stock != nil ? p.stock+=o.quantity : p.stock= o.quantity
 			 		p.save
 			 	end
 	
