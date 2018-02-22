@@ -146,8 +146,11 @@ app.controller("ProductSearchController", [ '$scope','$http', '$location', 'Tick
   };
 
   $scope.confirm = function(){
-     
-     Ticket.update({id: $scope.ticket_id, status: 2, change: $scope.change, pay_with: $scope.pay_with }, function(){
+    url= "/tickets/"+$scope.ticket_id+".pdf"
+    Ticket.update({id: $scope.ticket_id, status: 2, change: $scope.change, pay_with: $scope.pay_with }, 
+    function(){
+      console.log(url);
+      window.open(url, '_blank');
       $scope.findticket();
     },function(error){
          console.log(error)

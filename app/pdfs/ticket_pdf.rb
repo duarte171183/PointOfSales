@@ -1,5 +1,6 @@
 require 'currency-in-words'
 class TicketPdf < Prawn::Document
+
 	def initialize(ticket, view)
 		super(top_margin: 20,  :page_size => 'A6')
 		@ticket = ticket
@@ -9,7 +10,8 @@ class TicketPdf < Prawn::Document
 		line_items
 		total_price
 		leyend
-		#start_new_page 
+		self.y
+		page.dictionary.data[:MediaBox] = [0, self.y - 10,  350, 2000]
 	end
 
 	def date_shopping
